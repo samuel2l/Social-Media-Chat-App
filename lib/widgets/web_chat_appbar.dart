@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:social_media_chat_app/colors.dart';
+import 'package:social_media_chat_app/utils/colors.dart';
 
 class ChatAppBar extends StatelessWidget {
   const ChatAppBar({Key? key}) : super(key: key);

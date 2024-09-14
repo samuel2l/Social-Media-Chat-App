@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:social_media_chat_app/colors.dart';
+import 'package:social_media_chat_app/utils/colors.dart';
 
 class WebProfileBar extends StatelessWidget {
   const WebProfileBar({Key? key}) : super(key: key);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:social_media_chat_app/colors.dart';
+import 'package:social_media_chat_app/utils/colors.dart';
 import 'package:social_media_chat_app/info.dart';
 import 'package:social_media_chat_app/widgets/chat_list.dart';
 
@@ -43,7 +43,7 @@ class MobileChatScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Icon(Icons.emoji_emotions, color: Colors.grey,),
               ),
-              suffixIcon: Padding(
+              suffixIcon:const Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
