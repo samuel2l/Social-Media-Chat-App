@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:social_media_chat_app/features/auth/controller/auth_controller.dart';
+import 'package:social_media_chat_app/features/common/utils/utils.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
 import 'package:country_picker/country_picker.dart';
 
-class LoginScreen extends StatefulWidget {
-  static const routeName = '/login-screen';
+
+class LoginScreen extends ConsumerStatefulWidget {
+   static const routeName = '/login-screen';
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
+
   final numberController = TextEditingController();
-  String countryCode = '+233';
-  String countryName = 'Ghana';
+  String countryCode = '';
+  String countryName = '';
+  String countryPhoneCode='';
 
   @override
   void dispose() {
@@ -30,11 +36,14 @@ class _LoginScreenState extends State<LoginScreen> {
         setState(() {
           countryCode = country.flagEmoji + '+ ' + country.phoneCode;
           countryName = country.displayName;
+          countryPhoneCode=country.phoneCode;
         });
       },
     );
   }
-
+// void navigateToHome(){
+//   Navigator.pushNamed();
+// }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +90,14 @@ class _LoginScreenState extends State<LoginScreen> {
           SizedBox(
               width: MediaQuery.of(context).size.width * 0.75,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () async{
+                  if (numberController.text.trim().length ==10 || numberController.text.trim().length ==9){
+                   ref.watch(authControllerProvider).signInWPhone(context, '+$countryPhoneCode${numberController.text.trim()} ' );
+
+                  }else{
+                    showSnackBar(context: context, content: 'Invalid phone number');
+                  }
+                },
                 style: TextButton.styleFrom(
                   backgroundColor: tabColor, // Set background color
                   shape: RoundedRectangleBorder(

@@ -20,7 +20,7 @@ class AuthRepository {
           verificationCompleted: (PhoneAuthCredential credential) async {
             await auth.signInWithCredential(credential);
           },
-          verificationFailed: (error) => throw Exception(error.message),
+          verificationFailed: (error) => showSnackBar(content: error.toString(),context:context ),
           codeSent:(String verificationId, int? resendToken)async{
             Navigator.pushNamed(context, OTP.routeName,arguments: verificationId);
 
