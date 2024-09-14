@@ -1,27 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:social_media_chat_app/features/auth/controller/auth_controller.dart';
 
-class OTP extends StatefulWidget {
+class OTP extends ConsumerWidget {
     static const routeName = '/otp-screen';
     final String verificationId;
 
   const OTP({super.key, required this.verificationId});
 
-  @override
-  State<OTP> createState() => _OTPState();
-}
+  void verifyOTP(context,userOTP,WidgetRef ref){
+    ref.read(authControllerProvider).verifyOTP(context, verificationId, userOTP);
 
-class _OTPState extends State<OTP> {
+  }
+
   @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
+  Widget build(BuildContext context,WidgetRef ref) {
+    return  Scaffold(
       body: Center(
         child: Column(
           children: [
-            Text('An SMS has been sent to said number'),
+            const Text('An SMS has been sent to said number'),
             TextField(
-            decoration: InputDecoration(
+            decoration:const InputDecoration(
               hintText: '------'
             ),
+            onChanged: (value) {
+              if(value.length==6){
+                verifyOTP(context, value.trim(), ref);
+              }
+            },
             )
 
           ],

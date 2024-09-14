@@ -38,7 +38,7 @@ class AuthRepository {
 try{
   PhoneAuthCredential credential=PhoneAuthProvider.credential(verificationId: verificationId, smsCode: userOTP);
 await auth.signInWithCredential(credential);
-Navigator.pushNamed(context, UserProfileScreen.routeName);
+Navigator.pushNamedAndRemoveUntil(context, UserProfileScreen.routeName, (route) => false);
 }catch(e){
   showSnackBar(context: context, content: e.toString());
 }
