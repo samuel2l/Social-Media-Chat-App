@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/auth/screens/otp.dart';
 import 'package:social_media_chat_app/features/common/utils/utils.dart';
+
+final authRepositoryProvider=Provider((ref) => AuthRepository(auth: FirebaseAuth.instance, firestore: FirebaseFirestore.instance));
 
 class AuthRepository {
   final FirebaseAuth auth;
