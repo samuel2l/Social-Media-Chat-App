@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/auth/screens/otp.dart';
+import 'package:social_media_chat_app/features/auth/screens/user_profile.dart';
 import 'package:social_media_chat_app/features/common/utils/utils.dart';
 
 final authRepositoryProvider=Provider((ref) => AuthRepository(auth: FirebaseAuth.instance, firestore: FirebaseFirestore.instance));
@@ -31,5 +32,16 @@ class AuthRepository {
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }
+  }
+
+  void verifyOTP(context,verificationId,userOTP)async{
+try{
+  PhoneAuthCredential credential=PhoneAuthProvider.credential(verificationId: verificationId, smsCode: userOTP);
+await auth.signInWithCredential(credential);
+Navigator.pushNamed(context, UserProfileScreen.routeName);
+}catch(e){
+  showSnackBar(context: context, content: e.toString());
+}
+
   }
 }

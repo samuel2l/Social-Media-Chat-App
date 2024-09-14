@@ -13,6 +13,20 @@ class OTP extends StatefulWidget {
 class _OTPState extends State<OTP> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold(
+      body: Center(
+        child: Column(
+          children: [
+            Text('An SMS has been sent to said number'),
+            TextField(
+            decoration: InputDecoration(
+              hintText: '------'
+            ),
+            )
+
+          ],
+        ),
+      ),
+    );
   }
 }

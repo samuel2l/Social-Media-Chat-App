@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_media_chat_app/features/auth/screens/login.dart';
 import 'package:social_media_chat_app/features/auth/screens/otp.dart';
+import 'package:social_media_chat_app/features/auth/screens/user_profile.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -16,7 +17,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
          
         builder: (context) =>OTP(verificationId: verificationId,),
       );
-      
+            case UserProfileScreen.routeName:
+      return MaterialPageRoute(
+         
+        builder: (context) =>const UserProfileScreen(),
+      );
     default:
       return MaterialPageRoute(
         builder: (context) => const Scaffold(
