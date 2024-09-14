@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "964858635148",
+    "project_id": "social-media-chat-app-dc580",
+    "storage_bucket": "social-media-chat-app-dc580.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964858635148:android:fe2d59e27b1f500e682ca9",
+        "android_client_info": {
+          "package_name": "com.example.social_media_chat_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzMXCujSVs4I2rGw8XUdebsUJMJ4jIK0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
