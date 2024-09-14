@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
 import 'package:social_media_chat_app/features/auth/screens/login.dart';
+
 class LandingScreen extends StatelessWidget {
   const LandingScreen({super.key});
 
@@ -43,10 +44,18 @@ class LandingScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             SizedBox(
-              width: size.width * 0.75,
-              child: ElevatedButton(onPressed:()=> navigateToLoginScreen(context), child:const Text('Agree and Continue'))
-
-            ),
+                width: size.width * 0.75,
+                child: TextButton(
+                  onPressed: () => navigateToLoginScreen(context),
+                  style: TextButton.styleFrom(
+                    backgroundColor: tabColor, // Set background color
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(8.0), // Set rounded corners
+                    ),
+                  ),
+                  child: const Text('Agree and Continue'),
+                )),
           ],
         ),
       ),
