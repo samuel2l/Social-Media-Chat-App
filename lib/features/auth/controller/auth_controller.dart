@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/auth/respository/auth_repository.dart';
 
 final authControllerProvider = Provider(
-    (ref) => AuthController(authRepository: ref.watch(authRepositoryProvider)));
+    (ref) => AuthController(authRepository: ref.read(authRepositoryProvider)));
 
 class AuthController {
   final AuthRepository authRepository;

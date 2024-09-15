@@ -5,9 +5,8 @@ import 'package:social_media_chat_app/features/common/utils/utils.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
 import 'package:country_picker/country_picker.dart';
 
-
 class LoginScreen extends ConsumerStatefulWidget {
-   static const routeName = '/login-screen';
+  static const routeName = '/login-screen';
   const LoginScreen({super.key});
 
   @override
@@ -15,11 +14,10 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-
   final numberController = TextEditingController();
   String countryCode = '';
   String countryName = '';
-  String countryPhoneCode='';
+  String countryPhoneCode = '';
 
   @override
   void dispose() {
@@ -36,11 +34,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         setState(() {
           countryCode = country.flagEmoji + '+ ' + country.phoneCode;
           countryName = country.displayName;
-          countryPhoneCode=country.phoneCode;
+          countryPhoneCode = country.phoneCode;
         });
       },
     );
   }
+
 // void navigateToHome(){
 //   Navigator.pushNamed();
 // }
@@ -85,17 +84,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.6,
+            height: MediaQuery.of(context).size.height * 0.5,
           ),
           SizedBox(
               width: MediaQuery.of(context).size.width * 0.75,
               child: TextButton(
-                onPressed: () async{
-                  if (numberController.text.trim().length ==10 || numberController.text.trim().length ==9){
-                   ref.watch(authControllerProvider).signInWPhone(context, '+$countryPhoneCode${numberController.text.trim()} ' );
-
-                  }else{
-                    showSnackBar(context: context, content: 'Invalid phone number');
+                onPressed: () async {
+                  if (numberController.text.trim().length == 10 ||
+                      numberController.text.trim().length == 9) {
+                    ref.read(authControllerProvider).signInWPhone(context,
+                        '+$countryPhoneCode${numberController.text.trim()} ');
+                  } else {
+                    showSnackBar(
+                        context: context, content: 'Invalid phone number');
                   }
                 },
                 style: TextButton.styleFrom(
