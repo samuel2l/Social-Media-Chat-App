@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:social_media_chat_app/features/common/utils/utils.dart';
 
 class UserProfileScreen extends ConsumerStatefulWidget {
   static const String routeName = '/user-information';
@@ -21,8 +22,8 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
   }
 
   void selectImage() async {
-    // image = await pickImageFromGallery(context);
-    // setState(() {});
+    image = await pickImageFromGallery(context);
+    setState(() {});
   }
 
   // void storeUserData() async {
@@ -86,7 +87,9 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      selectImage();
+                    },
                     icon: const Icon(
                       Icons.done,
                     ),
