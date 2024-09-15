@@ -15,23 +15,28 @@ class OTP extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
-    return  Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            const Text('An SMS has been sent to said number'),
-            TextField(
-            decoration:const InputDecoration(
-              hintText: '------'
-            ),
-            onChanged: (value) {
-              if(value.length==6){
-                verifyOTP(context, value.trim(), ref);
-              }
-            },
-            )
-
-          ],
+    return  SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            children: [
+              const Text('An SMS has been sent to said number'),
+              Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: TextField(
+                decoration:const InputDecoration(
+                  hintText: '------'
+                ),
+                onChanged: (value) {
+                  if(value.length==6){
+                    verifyOTP(context, value.trim(), ref);
+                  }
+                },
+                ),
+              )
+      
+            ],
+          ),
         ),
       ),
     );

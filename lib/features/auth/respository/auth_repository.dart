@@ -22,8 +22,9 @@ class AuthRepository {
         verificationCompleted: (PhoneAuthCredential credential) async {
           await auth.signInWithCredential(credential);
         },
-        verificationFailed: (error) =>
-            showSnackBar(content: error.toString(), context: context),
+        verificationFailed: (error) {
+          showSnackBar(content: error.toString(), context: context);
+        },
         codeSent: (String verificationId, int? resendToken) async {
           Navigator.pushNamed(context, OTP.routeName,
               arguments: verificationId);
@@ -38,7 +39,6 @@ class AuthRepository {
   void verifyOTP(
       BuildContext context, String? verificationId, String userOTP) async {
     try {
-      print('verification ID $verificationId');
       if (verificationId != null && verificationId.isNotEmpty) {
         // Create the phone auth credential with the verification ID and the OTP
         PhoneAuthCredential credential = PhoneAuthProvider.credential(

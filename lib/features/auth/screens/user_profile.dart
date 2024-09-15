@@ -6,6 +6,8 @@ class UserProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Center(
+      child: Text('ERROR WEY MAKE I HAPPY LIKE THIS?????'),
+    );
   }
 }
