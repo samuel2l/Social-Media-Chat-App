@@ -113,5 +113,15 @@ class AuthRepository {
       showSnackBar(context: context, content: e.toString());
     }
   }
+Future<UserModel?> getUser()async{
+ var userData=await firestore.collection('users').doc(auth.currentUser!.uid).get();
+ UserModel? user;
+ if(userData.data()!=null){
+  user=UserModel.fromMap(userData.data()!);
+
+ }
+ return user;
+}
+
 
 }

@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 class UserModel {
-    final String name;
+  final String name;
   final String uid;
   final String dp;
   final bool isOnline;
@@ -16,9 +16,6 @@ class UserModel {
     required this.phoneNumber,
     required this.groupIds,
   });
-
-
-
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -38,9 +35,7 @@ class UserModel {
       dp: map['dp'] as String,
       isOnline: map['isOnline'] as bool,
       phoneNumber: map['phoneNumber'] as String,
-      groupIds: List<String>.from((map['groupIds'] as List<String>)));
-    
- 
+      groupIds: List<String>.from(map['groupIds']),
+    );
   }
-
 }
