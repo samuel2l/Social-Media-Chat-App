@@ -1,10 +1,15 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/auth/screens/otp.dart';
 import 'package:social_media_chat_app/features/auth/screens/user_profile.dart';
+import 'package:social_media_chat_app/features/common/repository/firebase_storage.dart';
 import 'package:social_media_chat_app/features/common/utils/utils.dart';
+import 'package:social_media_chat_app/models/user_model.dart';
+import 'package:social_media_chat_app/screens/mobile_layout_screen.dart';
 
 final authRepositoryProvider = Provider((ref) => AuthRepository(
     auth: FirebaseAuth.instance, firestore: FirebaseFirestore.instance));
@@ -64,4 +69,49 @@ class AuthRepository {
       showSnackBar(context: context, content: e.toString());
     }
   }
+  
+
+  void saveUserDataToFirebase({
+    required String name,
+    required File? dp,
+    required ProviderRef ref,
+    required BuildContext context,
+  }) async {
+    try {
+      String uid = auth.currentUser!.uid;
+      String photoUrl =
+          'https://png.pngitem.com/pimgs/s/649-6490124_katie-notopoulos-katienotopoulos-i-write-about-tech-round.png';
+
+      if (dp != null) {
+        photoUrl = await ref
+            .read(firebaseStorageRepositoryProvider)
+            .storeFileToFirebase(
+              'dp/$uid',
+              dp,
+            );
+      }
+
+      var user = UserModel(
+        name: name,
+        uid: uid,
+        dp: photoUrl,
+        isOnline: true,
+        phoneNumber: auth.currentUser!.phoneNumber!,
+        groupIds: [],
+      );
+
+      await firestore.collection('users').doc(uid).set(user.toMap());
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MobileLayoutScreen(),
+        ),
+        (route) => false,
+      );
+    } catch (e) {
+      showSnackBar(context: context, content: e.toString());
+    }
+  }
+
 }
