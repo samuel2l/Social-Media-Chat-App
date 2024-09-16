@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:social_media_chat_app/features/auth/controller/auth_controller.dart';
 import 'package:social_media_chat_app/features/common/utils/utils.dart';
 
 class UserProfileScreen extends ConsumerStatefulWidget {
@@ -26,17 +27,13 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
     setState(() {});
   }
 
-  // void storeUserData() async {
-  //   String name = nameController.text.trim();
+  void storeUserData() async {
+    String name = nameController.text.trim();
 
-  //   if (name.isNotEmpty) {
-  //     ref.read(authControllerProvider).saveUserDataToFirebase(
-  //           context,
-  //           name,
-  //           image,
-  //         );
-  //   }
-  // }
+    if (name.isNotEmpty) {
+      ref.read(authControllerProvider).saveUserDataToFirebase(name: name, dp: image, context: context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +85,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                   ),
                   IconButton(
                     onPressed: () {
-                      selectImage();
+                      storeUserData();
                     },
                     icon: const Icon(
                       Icons.done,
