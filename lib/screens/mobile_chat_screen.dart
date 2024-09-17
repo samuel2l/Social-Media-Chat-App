@@ -5,7 +5,10 @@ import 'package:social_media_chat_app/widgets/chat_list.dart';
 
 class MobileChatScreen extends StatelessWidget {
   static const String routeName = '/chat-screen';
-  const MobileChatScreen({super.key});
+
+  final String name,uid;
+
+  const MobileChatScreen({super.key, required this.name, required this.uid});
 
   @override
   Widget build(BuildContext context) {
