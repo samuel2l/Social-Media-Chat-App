@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:social_media_chat_app/features/contacts/controller/contatcts_controller.dart';
+import 'package:social_media_chat_app/features/contacts/controller/contacts_controller.dart';
 
 class ContactsScreen extends ConsumerWidget {
   static const String routeName = '/contacts';
   const ContactsScreen({super.key});
-// void selectContact(
-//       WidgetRef ref, Contact selectedContact, BuildContext context) {
-//     ref
-//         .read(selectContactControllerProvider)
-//         .selectContact(selectedContact, context);
-//   }
+void selectContact(
+      WidgetRef ref, Contact selectedContact, BuildContext context) {
+    ref
+        .read(selectContactControllerProvider)
+        .selectContact(selectedContact, context);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,7 +42,7 @@ class ContactsScreen extends ConsumerWidget {
                     final contact = contacts[index];
                     return InkWell(
                       onTap: () {
-                        // selectContact(ref, contact, context);
+                        selectContact(ref, contact, context);
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
