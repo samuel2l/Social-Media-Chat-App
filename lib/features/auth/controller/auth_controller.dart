@@ -42,4 +42,9 @@ Future<UserModel?> getUser()async{
 return user;
 
 }
+
+Stream<UserModel> checkUserOnline(String uid){
+return authRepository.checkUserOnline(uid);
+
+}
 }

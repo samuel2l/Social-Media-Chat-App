@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
-import 'package:social_media_chat_app/info.dart';
 import 'package:social_media_chat_app/widgets/chat_list.dart';
 
 class MobileChatScreen extends StatelessWidget {
@@ -16,7 +15,7 @@ class MobileChatScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: appBarColor,
         title: Text(
-          info[0]['name'].toString(),
+           name,
         ),
         centerTitle: false,
         actions: [

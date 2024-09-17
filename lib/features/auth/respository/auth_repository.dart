@@ -123,5 +123,9 @@ Future<UserModel?> getUser()async{
  return user;
 }
 
+Stream<UserModel> checkUserOnline(String uid){
+ return firestore.collection('users').doc(uid).snapshots().map((event) => UserModel.fromMap(event.data()!));
 
+
+}
 }
