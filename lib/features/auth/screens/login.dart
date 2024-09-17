@@ -49,66 +49,68 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       appBar: AppBar(
         title: const Text('Enter phone number'),
       ),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 30,
-          ),
-          Center(
-            child: TextButton(
-              onPressed: selectCountry,
-              style: TextButton.styleFrom(backgroundColor: tabColor),
-              child: const Text('Pick country'),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 30,
             ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          Text(countryName),
-          Padding(
-            padding: const EdgeInsets.all(28.0),
-            child: Row(
-              children: [
-                Text(countryCode),
-                const SizedBox(
-                  width: 10,
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.7,
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    controller: numberController,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.5,
-          ),
-          SizedBox(
-              width: MediaQuery.of(context).size.width * 0.75,
+            Center(
               child: TextButton(
-                onPressed: () async {
-                  if (numberController.text.trim().length == 10 ||
-                      numberController.text.trim().length == 9) {
-                    ref.read(authControllerProvider).signInWPhone(context,
-                        '+$countryPhoneCode${numberController.text.trim()} ');
-                  } else {
-                    showSnackBar(
-                        context: context, content: 'Invalid phone number');
-                  }
-                },
-                style: TextButton.styleFrom(
-                  backgroundColor: tabColor, // Set background color
-                  shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(8.0), // Set rounded corners
+                onPressed: selectCountry,
+                style: TextButton.styleFrom(backgroundColor: tabColor),
+                child: const Text('Pick country'),
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Text(countryName),
+            Padding(
+              padding: const EdgeInsets.all(28.0),
+              child: Row(
+                children: [
+                  Text(countryCode),
+                  const SizedBox(
+                    width: 10,
                   ),
-                ),
-                child: const Text('NEXT'),
-              )),
-        ],
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    child: TextField(
+                      keyboardType: TextInputType.number,
+                      controller: numberController,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.5,
+            ),
+            SizedBox(
+                width: MediaQuery.of(context).size.width * 0.75,
+                child: TextButton(
+                  onPressed: () async {
+                    if (numberController.text.trim().length == 10 ||
+                        numberController.text.trim().length == 9) {
+                      ref.read(authControllerProvider).signInWPhone(context,
+                          '+$countryPhoneCode${numberController.text.trim()} ');
+                    } else {
+                      showSnackBar(
+                          context: context, content: 'Invalid phone number');
+                    }
+                  },
+                  style: TextButton.styleFrom(
+                    backgroundColor: tabColor, // Set background color
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(8.0), // Set rounded corners
+                    ),
+                  ),
+                  child: const Text('NEXT'),
+                )),
+          ],
+        ),
       ),
     );
   }

@@ -7,8 +7,8 @@ import 'package:social_media_chat_app/features/common/utils/utils.dart';
 import 'package:social_media_chat_app/models/user_model.dart';
 import 'package:social_media_chat_app/screens/mobile_chat_screen.dart';
 
-final contactsRepositoryProvider=Provider((ref){
-return ContactsRepository(firestore: FirebaseFirestore.instance);
+final contactsRepositoryProvider = Provider((ref) {
+  return ContactsRepository(firestore: FirebaseFirestore.instance);
 });
 
 class ContactsRepository {
@@ -22,16 +22,13 @@ class ContactsRepository {
 
     try {
       if (await FlutterContacts.requestPermission()) {
-        contacts = await FlutterContacts.getContacts(
-            withProperties: true);
+        contacts = await FlutterContacts.getContacts(withProperties: true);
       }
-    } catch (e) {
-
-    }
+    } catch (e) {}
     return contacts;
   }
 
-    void selectContact(Contact selectedContact, BuildContext context) async {
+  void selectContact(Contact selectedContact, BuildContext context) async {
     try {
       var userCollection = await firestore.collection('users').get();
       bool isFound = false;
@@ -58,7 +55,7 @@ class ContactsRepository {
       if (!isFound) {
         showSnackBar(
           context: context,
-          content: 'This number does not exist on this app.',
+          content: 'This number is not a user',
         );
       }
     } catch (e) {

@@ -4,7 +4,7 @@ import 'package:social_media_chat_app/info.dart';
 import 'package:social_media_chat_app/widgets/chat_list.dart';
 
 class MobileChatScreen extends StatelessWidget {
-  static const String routeName='';
+  static const String routeName = '/chat-screen';
   const MobileChatScreen({super.key});
 
   @override
@@ -48,7 +48,7 @@ class MobileChatScreen extends StatelessWidget {
                 ),
               ),
               suffixIcon: const Padding(
-                padding:  EdgeInsets.symmetric(horizontal: 20.0),
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
