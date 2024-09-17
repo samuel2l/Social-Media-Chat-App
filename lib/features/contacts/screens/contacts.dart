@@ -33,37 +33,40 @@ class ContactsScreen extends ConsumerWidget {
         ],
       ),
       body: ref.watch(contactsProvider).when(
-            data: (contactList) => ListView.builder(
-                itemCount: contactList.length,
-                itemBuilder: (context, index) {
-                  final contact = contactList[index];
-                  return InkWell(
-                    onTap: () {
-                      // selectContact(ref, contact, context);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: ListTile(
-                        title: Text(
-                          contact.displayName,
-                          style: const TextStyle(
-                            fontSize: 18,
+            data: (contacts) {
+
+              return ListView.builder(
+                  itemCount: contacts.length,
+                  itemBuilder: (context, index) {
+                    final contact = contacts[index];
+                    return InkWell(
+                      onTap: () {
+                        // selectContact(ref, contact, context);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: ListTile(
+                          title: Text(
+                            contact.displayName,
+                            style: const TextStyle(
+                              fontSize: 18,
+                            ),
                           ),
+                          leading: contact.photo == null
+                              ? null
+                              : CircleAvatar(
+                                  backgroundImage: MemoryImage(contact.photo!),
+                                  radius: 30,
+                                ),
                         ),
-                        leading: contact.photo == null
-                            ? null
-                            : CircleAvatar(
-                                backgroundImage: MemoryImage(contact.photo!),
-                                radius: 30,
-                              ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  });
+            },
             error: (error, stackTrace) => Center(
               child: Text(error.toString()),
             ),
-            loading: ()=>const Center(
+            loading: () => const Center(
               child: CircularProgressIndicator(),
             ),
           ),
