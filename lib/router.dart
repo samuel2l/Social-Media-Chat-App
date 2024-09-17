@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:social_media_chat_app/features/auth/screens/login.dart';
 import 'package:social_media_chat_app/features/auth/screens/otp.dart';
 import 'package:social_media_chat_app/features/auth/screens/user_profile.dart';
+import 'package:social_media_chat_app/features/contacts/screens/contacts.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -21,6 +22,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
          
         builder: (context) =>const UserProfileScreen(),
+      );
+                  case ContactsScreen.routeName:
+      return MaterialPageRoute(
+         
+        builder: (context) =>const ContactsScreen(),
       );
     default:
       return MaterialPageRoute(
