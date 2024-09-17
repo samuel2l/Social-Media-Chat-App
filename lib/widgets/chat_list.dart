@@ -4,7 +4,7 @@ import 'package:social_media_chat_app/widgets/my_message_card.dart';
 import 'package:social_media_chat_app/widgets/sender_message_card.dart';
 
 class ChatList extends StatelessWidget {
-  const ChatList({Key? key}) : super(key: key);
+  const ChatList({super.key});
 
   @override
   Widget build(BuildContext context) {
