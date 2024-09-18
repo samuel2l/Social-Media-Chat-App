@@ -9,7 +9,8 @@ import 'package:social_media_chat_app/widgets/chat_list.dart';
 class MobileChatScreen extends ConsumerStatefulWidget {
   static const String routeName = '/chat-screen';
 
-  final String name, uid;
+  final String name;
+  final String uid;
 
   const MobileChatScreen({super.key, required this.name, required this.uid});
 
@@ -59,12 +60,12 @@ class _MobileChatScreenState extends ConsumerState<MobileChatScreen> {
           ),
         ],
       ),
-      body: const Column(
+      body:  Column(
         children: [
-           Expanded(
+           const Expanded(
             child: ChatList(),
           ),
-          SendMessageField()
+          SendMessageField(receiverUid: widget.uid,)
         ],
       ),
     );

@@ -1,12 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/common/enums/message_type.dart';
 import 'package:social_media_chat_app/features/common/utils/utils.dart';
 import 'package:social_media_chat_app/models/chat_contact_model.dart';
 import 'package:social_media_chat_app/models/message_model.dart';
 import 'package:social_media_chat_app/models/user_model.dart';
 import 'package:uuid/uuid.dart';
+
+final chatRepositoryProvider = Provider(
+  (ref) => ChatRepository(
+    auth: FirebaseAuth.instance,
+    firestore: FirebaseFirestore.instance,
+  ),
+);
 
 class ChatRepository {
   final FirebaseAuth auth;
@@ -82,7 +90,8 @@ class ChatRepository {
         .doc(messageId)
         .set(
           message.toMap(),
-        );  }
+        );
+  }
 
   void sendText(
       {required BuildContext context,

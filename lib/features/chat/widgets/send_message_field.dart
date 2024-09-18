@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:social_media_chat_app/features/chat/controller/chat_controller.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
 
-class SendMessageField extends StatefulWidget {
-  const SendMessageField({super.key});
+class SendMessageField extends ConsumerStatefulWidget {
+  final String receiverUid;
+  const SendMessageField( {super.key,required this.receiverUid});
 
   @override
-  State<SendMessageField> createState() => _SendMessageFieldState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _SendMessageFieldState();
 }
 
-class _SendMessageFieldState extends State<SendMessageField> {
+class _SendMessageFieldState extends ConsumerState<SendMessageField> {
   var isMessage = false;
-  @override
+  var messageController= TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -19,6 +23,7 @@ class _SendMessageFieldState extends State<SendMessageField> {
           Expanded(
             flex: 6,
             child: TextField(
+              controller: messageController,
               onChanged: (value) {
                 if (value.isNotEmpty) {
                   setState(() {
@@ -88,7 +93,14 @@ class _SendMessageFieldState extends State<SendMessageField> {
           Expanded(
             child: CircleAvatar(
               backgroundColor: tabColor,
-              child: Icon(isMessage ? Icons.send : Icons.mic),
+              child: GestureDetector(
+                  onTap: () {
+                    if(isMessage){
+
+          ref.read(chatControllerProvider).sendText(context: context, text:messageController.text.trim() , receiverUid: widget.receiverUid);
+  }
+                  },
+                  child: Icon(isMessage ? Icons.send : Icons.mic)),
             ),
           )
         ],
