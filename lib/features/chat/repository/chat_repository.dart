@@ -11,8 +11,11 @@ class ChatRepository {
 
   ChatRepository({required this.auth, required this.firestore});
 
-  void saveChatData(UserModel sender, UserModel receiver, String text,
-      DateTime timeSent) async {
+  void saveChatDataToContactCollection(
+      {required UserModel sender,
+      required UserModel receiver,
+      required String text,
+      required DateTime timeSent}) async {
     var receiverChatContact = ChatContact(
         name: sender.name,
         dp: sender.dp,
@@ -39,6 +42,13 @@ class ChatRepository {
         .set(senderChatContact.toMap());
   }
 
+  void saveMessage(
+      {required UserModel sender,
+      required UserModel receiver,
+      required String text,
+      required DateTime timeSent,
+      required String messageId}) {}
+
   void sendText(
       {required BuildContext context,
       required String text,
@@ -50,7 +60,8 @@ class ChatRepository {
       var userDataMap =
           await firestore.collection('users').doc(receiverUid).get();
       receiver = UserModel.fromMap(userDataMap.data()!);
-      saveChatData(sender, receiver, text, timeSent);
+      saveChatDataToContactCollection(
+          sender: sender, receiver: receiver, text: text, timeSent: timeSent);
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }
