@@ -3,7 +3,7 @@ import 'package:social_media_chat_app/features/auth/screens/login.dart';
 import 'package:social_media_chat_app/features/auth/screens/otp.dart';
 import 'package:social_media_chat_app/features/auth/screens/user_profile.dart';
 import 'package:social_media_chat_app/features/contacts/screens/contacts.dart';
-import 'package:social_media_chat_app/screens/mobile_chat_screen.dart';
+import 'package:social_media_chat_app/features/chat/screens/mobile_chat_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
