@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/auth/controller/auth_controller.dart';
+import 'package:social_media_chat_app/features/chat/widgets/send_message_field.dart';
 import 'package:social_media_chat_app/models/user_model.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
 import 'package:social_media_chat_app/widgets/chat_list.dart';
@@ -18,8 +19,6 @@ class MobileChatScreen extends ConsumerStatefulWidget {
 }
 
 class _MobileChatScreenState extends ConsumerState<MobileChatScreen> {
-  final messageController = TextEditingController();
-  var isMessage = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,91 +59,12 @@ class _MobileChatScreenState extends ConsumerState<MobileChatScreen> {
           ),
         ],
       ),
-      body: Column(
+      body: const Column(
         children: [
-          const Expanded(
+           Expanded(
             child: ChatList(),
           ),
-          Row(
-            children: [
-              Expanded(
-                flex: 6,
-                child: TextField(
-                  controller: messageController,
-                  onChanged: (value) {
-                    if (value.isNotEmpty) {
-                      setState(() {
-                        isMessage = true;
-                      });
-                    } else {
-                      setState(() {
-                        isMessage = false;
-                      });
-                    }
-                  },
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: mobileChatBoxColor,
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.only(left: 13),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.13,
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {},
-                              child: const Icon(
-                                Icons.emoji_emotions,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {},
-                              child: const Icon(
-                                Icons.gif,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    suffixIcon: const SizedBox(
-                      width: 100,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Icon(
-                            Icons.camera_alt,
-                            color: Colors.grey,
-                          ),
-                          Icon(
-                            Icons.attach_file,
-                            color: Colors.grey,
-                          ),
-                        ],
-                      ),
-                    ),
-                    hintText: 'Type a message!',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                      borderSide: const BorderSide(
-                        width: 0,
-                        style: BorderStyle.none,
-                      ),
-                    ),
-                    contentPadding: const EdgeInsets.all(10),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: CircleAvatar(
-                  backgroundColor: tabColor,
-                  child: Icon(isMessage ? Icons.send : Icons.mic),
-                ),
-              )
-            ],
-          ),
+          SendMessageField()
         ],
       ),
     );
