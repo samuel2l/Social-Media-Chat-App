@@ -9,15 +9,8 @@ class SendMessageField extends StatefulWidget {
 }
 
 class _SendMessageFieldState extends State<SendMessageField> {
-  final messageController = TextEditingController();
   var isMessage = false;
   @override
-  void dispose() {
-    messageController.dispose();
-
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -26,7 +19,6 @@ class _SendMessageFieldState extends State<SendMessageField> {
           Expanded(
             flex: 6,
             child: TextField(
-              controller: messageController,
               onChanged: (value) {
                 if (value.isNotEmpty) {
                   setState(() {
