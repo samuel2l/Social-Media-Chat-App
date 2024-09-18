@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/auth/controller/auth_controller.dart';
 import 'package:social_media_chat_app/models/user_model.dart';
@@ -8,7 +6,6 @@ import 'package:social_media_chat_app/utils/colors.dart';
 import 'package:social_media_chat_app/widgets/chat_list.dart';
 
 class MobileChatScreen extends ConsumerStatefulWidget {
-
   static const String routeName = '/chat-screen';
 
   final String name, uid;
@@ -16,11 +13,13 @@ class MobileChatScreen extends ConsumerStatefulWidget {
   const MobileChatScreen({super.key, required this.name, required this.uid});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _MobileChatScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _MobileChatScreenState();
 }
 
 class _MobileChatScreenState extends ConsumerState<MobileChatScreen> {
-
+  final messageController = TextEditingController();
+  var isMessage = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,6 +70,18 @@ class _MobileChatScreenState extends ConsumerState<MobileChatScreen> {
               Expanded(
                 flex: 6,
                 child: TextField(
+                  controller: messageController,
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      setState(() {
+                        isMessage = true;
+                      });
+                    } else {
+                      setState(() {
+                        isMessage = false;
+                      });
+                    }
+                  },
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: mobileChatBoxColor,
@@ -126,10 +137,10 @@ class _MobileChatScreenState extends ConsumerState<MobileChatScreen> {
                   ),
                 ),
               ),
-              const Expanded(
+              Expanded(
                 child: CircleAvatar(
                   backgroundColor: tabColor,
-                  child: Icon(Icons.send),
+                  child: Icon(isMessage ? Icons.send : Icons.mic),
                 ),
               )
             ],
