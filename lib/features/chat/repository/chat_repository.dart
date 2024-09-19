@@ -23,6 +23,7 @@ class ChatRepository {
   ChatRepository({required this.auth, required this.firestore});
 
   void saveChatDataToContactCollection(
+    //save data t the chats collection. each chat is virtually a contact
       {required UserModel sender,
       required UserModel receiver,
       required String text,

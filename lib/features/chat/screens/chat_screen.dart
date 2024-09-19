@@ -20,6 +20,7 @@ class MobileChatScreen extends ConsumerStatefulWidget {
 }
 
 class _MobileChatScreenState extends ConsumerState<MobileChatScreen> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
