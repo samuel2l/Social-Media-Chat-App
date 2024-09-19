@@ -69,7 +69,6 @@ class AuthRepository {
       showSnackBar(context: context, content: e.toString());
     }
   }
-  
 
   void saveUserDataToFirebase({
     required String name,
@@ -113,19 +112,29 @@ class AuthRepository {
       showSnackBar(context: context, content: e.toString());
     }
   }
-Future<UserModel?> getUser()async{
- var userData=await firestore.collection('users').doc(auth.currentUser!.uid).get();
- UserModel? user;
- if(userData.data()!=null){
-  user=UserModel.fromMap(userData.data()!);
 
- }
- return user;
-}
+  Future<UserModel?> getUser() async {
+    var userData =
+        await firestore.collection('users').doc(auth.currentUser!.uid).get();
+    UserModel? user;
+    if (userData.data() != null) {
+      user = UserModel.fromMap(userData.data()!);
+    }
+    return user;
+  }
 
-Stream<UserModel> checkUserOnline(String uid){
- return firestore.collection('users').doc(uid).snapshots().map((event) => UserModel.fromMap(event.data()!));
+  Stream<UserModel> checkUserOnline(String uid) {
+    return firestore
+        .collection('users')
+        .doc(uid)
+        .snapshots()
+        .map((event) => UserModel.fromMap(event.data()!));
+  }
 
-
-}
+  void setUserState(bool isOnline) async {
+    await firestore.collection('users').doc(auth.currentUser!.uid).update({
+      'isOnline': isOnline,
+    });
+    print('ework repo>>???');
+  }
 }

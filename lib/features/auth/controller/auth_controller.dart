@@ -5,21 +5,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/auth/respository/auth_repository.dart';
 import 'package:social_media_chat_app/models/user_model.dart';
 
-final authControllerProvider = Provider(
-    (ref) => AuthController(authRepository: ref.read(authRepositoryProvider),ref:ref));
+final authControllerProvider = Provider((ref) =>
+    AuthController(authRepository: ref.read(authRepositoryProvider), ref: ref));
 
 //we will use a specific provider for methods that cannot use the normal provider
 //the get user function for getting user data for example will need a future provider
 
-final getUserProvider=FutureProvider<UserModel?>((ref) {
-return ref.watch(authControllerProvider).getUser();
+final getUserProvider = FutureProvider<UserModel?>((ref) {
+  return ref.watch(authControllerProvider).getUser();
 });
 
 class AuthController {
   final AuthRepository authRepository;
   final ProviderRef ref;
 
-  AuthController({required this.authRepository,required this.ref});
+  AuthController({required this.authRepository, required this.ref});
 
   void signInWPhone(BuildContext context, String number) async {
     authRepository.signInWPhone(context, number);
@@ -32,19 +32,27 @@ class AuthController {
       userOTP,
     );
   }
-  void saveUserDataToFirebase(    {required String name,
+
+  void saveUserDataToFirebase({
+    required String name,
     required File? dp,
-    required BuildContext context,})async{
-    authRepository.saveUserDataToFirebase(name: name, dp: dp, ref: ref, context: context);
+    required BuildContext context,
+  }) async {
+    authRepository.saveUserDataToFirebase(
+        name: name, dp: dp, ref: ref, context: context);
   }
-Future<UserModel?> getUser()async{
-  UserModel? user=await authRepository.getUser();
-return user;
 
-}
+  Future<UserModel?> getUser() async {
+    UserModel? user = await authRepository.getUser();
+    return user;
+  }
 
-Stream<UserModel> checkUserOnline(String uid){
-return authRepository.checkUserOnline(uid);
+  Stream<UserModel> checkUserOnline(String uid) {
+    return authRepository.checkUserOnline(uid);
+  }
 
-}
+  void setUserState(bool isOnline) {
+    authRepository.setUserState(isOnline);
+    
+  }
 }

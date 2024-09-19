@@ -29,11 +29,13 @@ class _MobileChatScreenState extends ConsumerState<MobileChatScreen> {
         title: StreamBuilder<UserModel>(
           stream: ref.watch(authControllerProvider).checkUserOnline(widget.uid),
           builder: (context, snapshot) {
+
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
+
             return Column(
               children: [
                 Text(widget.name),
