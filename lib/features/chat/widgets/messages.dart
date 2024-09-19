@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import 'package:social_media_chat_app/features/chat/controller/chat_controller.dart';
-import 'package:social_media_chat_app/info.dart';
 import 'package:social_media_chat_app/models/message_model.dart';
 import 'package:social_media_chat_app/widgets/my_message_card.dart';
 import 'package:social_media_chat_app/widgets/sender_message_card.dart';
@@ -38,6 +37,7 @@ class _MessagesState extends ConsumerState<Messages> {
             newMnessageController.jumpTo(newMnessageController.position.maxScrollExtent);
            });
           return ListView.builder(
+            controller: newMnessageController,
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               var message=snapshot.data![index];
