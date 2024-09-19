@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/auth/controller/auth_controller.dart';
 import 'package:social_media_chat_app/features/chat/repository/chat_repository.dart';
+import 'package:social_media_chat_app/models/chat_contact_model.dart';
 final chatControllerProvider=Provider((ref) => ChatController(chatRepository: ref.read(chatRepositoryProvider), ref: ref));
 class ChatController{
   final ChatRepository chatRepository;
@@ -18,4 +19,8 @@ final ProviderRef ref;
 ref.read(getUserProvider).whenData((value)=>chatRepository.sendText(context: context, text: text, receiverUid: receiverUid, sender: value!));
 
       }
+Stream<List<ChatContact>> getChats(){
+  return chatRepository.getChats();
+  
+}
 }
