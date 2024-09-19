@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:social_media_chat_app/features/chat/controller/chat_controller.dart';
 import 'package:social_media_chat_app/models/chat_contact_model.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
-import 'package:social_media_chat_app/features/chat/screens/mobile_chat_screen.dart';
+import 'package:social_media_chat_app/features/chat/screens/chat_screen.dart';
 
 class ContactsList extends ConsumerStatefulWidget {
   const ContactsList({super.key});
@@ -36,12 +36,15 @@ class _ContactsListState extends ConsumerState<ContactsList> {
                         children: [
                           InkWell(
                             onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => MobileChatScreen(
-                                      name: chatContact.name,
-                                      uid: chatContact.uid),
-                                ),
+                              Navigator.pushNamed(
+                                context,
+                                MobileChatScreen.routeName,
+                                arguments: {
+                                  'name': chatContact.name,
+                                  'uid': chatContact.uid,
+                                  'isGroupChat': false,
+                                  'profilePic': chatContact.dp,
+                                },
                               );
                             },
                             child: Padding(

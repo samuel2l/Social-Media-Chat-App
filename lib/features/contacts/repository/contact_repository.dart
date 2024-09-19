@@ -5,7 +5,7 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/common/utils/utils.dart';
 import 'package:social_media_chat_app/models/user_model.dart';
-import 'package:social_media_chat_app/features/chat/screens/mobile_chat_screen.dart';
+import 'package:social_media_chat_app/features/chat/screens/chat_screen.dart';
 
 final contactsRepositoryProvider = Provider((ref) {
   return ContactsRepository(firestore: FirebaseFirestore.instance);

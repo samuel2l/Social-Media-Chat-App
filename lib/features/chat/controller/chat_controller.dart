@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/auth/controller/auth_controller.dart';
 import 'package:social_media_chat_app/features/chat/repository/chat_repository.dart';
 import 'package:social_media_chat_app/models/chat_contact_model.dart';
+import 'package:social_media_chat_app/models/message_model.dart';
 final chatControllerProvider=Provider((ref) => ChatController(chatRepository: ref.read(chatRepositoryProvider), ref: ref));
 class ChatController{
   final ChatRepository chatRepository;
@@ -21,6 +22,10 @@ ref.read(getUserProvider).whenData((value)=>chatRepository.sendText(context: con
       }
 Stream<List<ChatContact>> getChats(){
   return chatRepository.getChats();
+  
+}
+Stream<List<Message>> getMessages(receiveruid){
+  return chatRepository.getMessages(receiveruid);
   
 }
 }

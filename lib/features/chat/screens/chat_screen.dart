@@ -4,7 +4,7 @@ import 'package:social_media_chat_app/features/auth/controller/auth_controller.d
 import 'package:social_media_chat_app/features/chat/widgets/send_message_field.dart';
 import 'package:social_media_chat_app/models/user_model.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
-import 'package:social_media_chat_app/widgets/chat_list.dart';
+import 'package:social_media_chat_app/features/chat/widgets/messages.dart';
 
 class MobileChatScreen extends ConsumerStatefulWidget {
   static const String routeName = '/chat-screen';
@@ -60,12 +60,14 @@ class _MobileChatScreenState extends ConsumerState<MobileChatScreen> {
           ),
         ],
       ),
-      body:  Column(
+      body: Column(
         children: [
-           const Expanded(
-            child: ChatList(),
+           Expanded(
+            child: Messages(receiveruid: widget.uid),
           ),
-          SendMessageField(receiverUid: widget.uid,)
+          SendMessageField(
+            receiverUid: widget.uid,
+          )
         ],
       ),
     );
