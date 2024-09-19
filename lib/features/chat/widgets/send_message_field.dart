@@ -98,6 +98,9 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
                     if(isMessage){
 
           ref.read(chatControllerProvider).sendText(context: context, text:messageController.text.trim() , receiverUid: widget.receiverUid);
+  setState(() {
+  messageController.text='';
+  });
   }
                   },
                   child: Icon(isMessage ? Icons.send : Icons.mic)),
