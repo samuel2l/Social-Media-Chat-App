@@ -6,8 +6,6 @@ import 'package:social_media_chat_app/models/chat_contact_model.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
 import 'package:social_media_chat_app/features/chat/screens/mobile_chat_screen.dart';
 
-
-
 class ContactsList extends ConsumerStatefulWidget {
   const ContactsList({super.key});
 
@@ -16,70 +14,75 @@ class ContactsList extends ConsumerStatefulWidget {
 }
 
 class _ContactsListState extends ConsumerState<ContactsList> {
-
   @override
   Widget build(BuildContext context) {
-        return Padding(
+    return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: StreamBuilder<List<ChatContact>>(
-        stream: ref.watch(chatControllerProvider).getChats(),
-        builder: (context, snapshot) {
-          return snapshot.data!=null?
-           ListView.builder(
-            shrinkWrap: true,
-            itemCount: snapshot.data!.length ,
-            itemBuilder: (context, index) {
-              var chatContact=snapshot.data![index];
-              return  Column(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => MobileChatScreen(name: chatContact.name, uid: chatContact.uid),
-                        ),
+          stream: ref.watch(chatControllerProvider).getChats(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return snapshot.data != null
+                ? ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      var chatContact = snapshot.data![index];
+                      return Column(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => MobileChatScreen(
+                                      name: chatContact.name,
+                                      uid: chatContact.uid),
+                                ),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: ListTile(
+                                title: Text(
+                                  chatContact.name,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                subtitle: Padding(
+                                  padding: const EdgeInsets.only(top: 6.0),
+                                  child: Text(
+                                    chatContact.lastMessage,
+                                    style: const TextStyle(fontSize: 15),
+                                  ),
+                                ),
+                                leading: CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                    chatContact.dp,
+                                  ),
+                                  radius: 30,
+                                ),
+                                trailing: Text(
+                                  DateFormat.Hm().format(chatContact.timeSent),
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Divider(color: dividerColor, indent: 85),
+                        ],
                       );
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: ListTile(
-                        title: Text(
-                          chatContact.name,
-                          style: const TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.only(top: 6.0),
-                          child: Text(
-                            chatContact.lastMessage,
-                            style: const TextStyle(fontSize: 15),
-                          ),
-                        ),
-                        leading: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            chatContact.dp,
-                          ),
-                          radius: 30,
-                        ),
-                        trailing: Text(
-                          DateFormat.Hm().format(chatContact.timeSent),
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 13,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Divider(color: dividerColor, indent: 85),
-                ],
-              );
-            },
-          ):Center(child: Text('you have no cointacts'));
-        }
-      ),
+                  )
+                : Center(child: Text('you have no chats'));
+          }),
     );
-
   }
 }
