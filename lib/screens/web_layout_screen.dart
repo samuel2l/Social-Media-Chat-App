@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
 import 'package:social_media_chat_app/widgets/chat_list.dart';
 import 'package:social_media_chat_app/widgets/web_chat_appbar.dart';
-import 'package:social_media_chat_app/widgets/contacts_list.dart';
+import 'package:social_media_chat_app/features/chat/screens/contacts_list.dart';
 import 'package:social_media_chat_app/widgets/web_profile_bar.dart';
 import 'package:social_media_chat_app/widgets/web_search_bar.dart';
 

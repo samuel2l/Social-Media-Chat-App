@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:social_media_chat_app/features/contacts/screens/contacts.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
-import 'package:social_media_chat_app/widgets/contacts_list.dart';
+import 'package:social_media_chat_app/features/chat/screens/contacts_list.dart';
 
 class MobileLayoutScreen extends StatelessWidget {
   const MobileLayoutScreen({super.key});

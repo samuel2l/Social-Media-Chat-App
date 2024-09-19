@@ -119,4 +119,38 @@ class ChatRepository {
       showSnackBar(context: context, content: e.toString());
     }
   }
+Stream<List<ChatContact>> getChats(){
+
+    return firestore
+        .collection('users')
+        // auth.currentUser!.uid is same as sender.uid
+        .doc(auth.currentUser!.uid)
+        .collection('chats')
+        .snapshots()
+        .asyncMap((event) async {
+          // asyncMap: The stream of snapshots is transformed using asyncMap, which allows asynchronous operations on each snapshot event.
+      List<ChatContact> contacts = [];
+      for (var chatContactMap in event.docs) {
+        var chatContact = ChatContact.fromMap(chatContactMap.data());
+        var userData = await firestore
+            .collection('users')
+            .doc(chatContact.uid)
+            .get();
+        var user = UserModel.fromMap(userData.data()!);
+
+        contacts.add(
+          ChatContact(
+            name: user.name,
+            dp: user.dp,
+            uid: chatContact.uid,
+            timeSent: chatContact.timeSent,
+            lastMessage: chatContact.lastMessage,
+          ),
+        );
+      }
+      return contacts;
+    });
+ 
+}
+
 }
