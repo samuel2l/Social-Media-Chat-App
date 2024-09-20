@@ -1,11 +1,19 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/chat/controller/chat_controller.dart';
+import 'package:social_media_chat_app/features/common/enums/message_type.dart';
+import 'package:social_media_chat_app/features/common/utils/utils.dart';
+import 'package:social_media_chat_app/models/user_model.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
 
 class SendMessageField extends ConsumerStatefulWidget {
   final String receiverUid;
-  const SendMessageField( {super.key,required this.receiverUid});
+  const SendMessageField({super.key, required this.receiverUid});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -14,7 +22,41 @@ class SendMessageField extends ConsumerStatefulWidget {
 
 class _SendMessageFieldState extends ConsumerState<SendMessageField> {
   var isMessage = false;
-  var messageController= TextEditingController();
+  var messageController = TextEditingController();
+  void sendText() {
+    if (isMessage) {
+      ref.read(chatControllerProvider).sendText(
+          context: context,
+          text: messageController.text.trim(),
+          receiverUid: widget.receiverUid);
+      setState(() {
+        messageController.text = '';
+      });
+    }
+  }
+
+  void sendFile(
+    File file,
+    MessageType messageType,
+  ) async{
+var userData =
+        await FirebaseFirestore.instance.collection('users').doc(widget.receiverUid).get();
+    UserModel? receiver;
+    if (userData.data() != null) {
+      receiver = UserModel.fromMap(userData.data()!);
+    }
+    ref.read(chatControllerProvider).sendFile(context: context, file: file, receiver: receiver!, messageType: messageType);
+        
+  }
+  void sendImage()async{
+    File? image=await pickImageFromGallery(context);
+    if(image!=null){
+      sendFile(image, MessageType.image);
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -62,18 +104,24 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
                     ),
                   ),
                 ),
-                suffixIcon: const SizedBox(
+                suffixIcon:  SizedBox(
                   width: 100,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Icon(
-                        Icons.camera_alt,
-                        color: Colors.grey,
+                      GestureDetector(
+                        child: const Icon(
+                          Icons.camera_alt,
+                          color: Colors.grey,
+
+                        ),
+                        onTap: () => sendImage,
                       ),
-                      Icon(
-                        Icons.attach_file,
-                        color: Colors.grey,
+                      GestureDetector(
+                        child: const Icon(
+                          Icons.attach_file,
+                          color: Colors.grey,
+                        ),
                       ),
                     ],
                   ),
@@ -95,13 +143,7 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
               backgroundColor: tabColor,
               child: GestureDetector(
                   onTap: () {
-                    if(isMessage){
-
-          ref.read(chatControllerProvider).sendText(context: context, text:messageController.text.trim() , receiverUid: widget.receiverUid);
-  setState(() {
-  messageController.text='';
-  });
-  }
+                    sendText();
                   },
                   child: Icon(isMessage ? Icons.send : Icons.mic)),
             ),

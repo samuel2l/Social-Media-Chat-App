@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/common/enums/message_type.dart';
+import 'package:social_media_chat_app/features/common/repository/firebase_storage.dart';
 import 'package:social_media_chat_app/features/common/utils/utils.dart';
 import 'package:social_media_chat_app/models/chat_contact_model.dart';
 import 'package:social_media_chat_app/models/message_model.dart';
@@ -23,7 +26,7 @@ class ChatRepository {
   ChatRepository({required this.auth, required this.firestore});
 
   void saveChatDataToContactCollection(
-    //save data t the chats collection. each chat is virtually a contact
+      //save data t the chats collection. each chat is virtually a contact
       {required UserModel sender,
       required UserModel receiver,
       required String text,
@@ -120,8 +123,8 @@ class ChatRepository {
       showSnackBar(context: context, content: e.toString());
     }
   }
-Stream<List<ChatContact>> getChats(){
 
+  Stream<List<ChatContact>> getChats() {
     return firestore
         .collection('users')
         // auth.currentUser!.uid is same as sender.uid
@@ -129,14 +132,12 @@ Stream<List<ChatContact>> getChats(){
         .collection('chats')
         .snapshots()
         .asyncMap((event) async {
-          // asyncMap: The stream of snapshots is transformed using asyncMap, which allows asynchronous operations on each snapshot event.
+      // asyncMap: The stream of snapshots is transformed using asyncMap, which allows asynchronous operations on each snapshot event.
       List<ChatContact> contacts = [];
       for (var chatContactMap in event.docs) {
         var chatContact = ChatContact.fromMap(chatContactMap.data());
-        var userData = await firestore
-            .collection('users')
-            .doc(chatContact.uid)
-            .get();
+        var userData =
+            await firestore.collection('users').doc(chatContact.uid).get();
         var user = UserModel.fromMap(userData.data()!);
 
         contacts.add(
@@ -151,10 +152,9 @@ Stream<List<ChatContact>> getChats(){
       }
       return contacts;
     });
- 
-}
+  }
 
-Stream<List<Message>> getMessages(String recieverUid) {
+  Stream<List<Message>> getMessages(String recieverUid) {
     return firestore
         .collection('users')
         .doc(auth.currentUser!.uid)
@@ -172,4 +172,57 @@ Stream<List<Message>> getMessages(String recieverUid) {
     });
   }
 
+  void sendFile({
+    required BuildContext context,
+    required File file,
+    required UserModel receiver,
+    required UserModel sender,
+    required ProviderRef ref,
+    required MessageType messageType,
+  }) async {
+    try {
+      var timeSent = DateTime.now();
+      var messageId = const Uuid().v1();
+
+      String fileUrl =
+          await ref.read(firebaseStorageRepositoryProvider).storeFileToFirebase(
+                'chat/${messageType.type}/${sender.uid}/${receiver.uid}/$messageId',
+                file,
+              );
+
+      String displayMessage;
+
+      switch (messageType) {
+        case MessageType.image:
+          displayMessage = '🎞️ Image';
+          break;
+        case MessageType.video:
+          displayMessage = '🎥 Video';
+          break;
+        case MessageType.audio:
+          displayMessage = '🎵 Audio';
+          break;
+        case MessageType.gif:
+          displayMessage = ' GIF';
+          break;
+        default:
+          displayMessage = '';
+      }
+      saveChatDataToContactCollection(
+          sender: sender,
+          receiver: receiver,
+          text: displayMessage,
+          timeSent: timeSent);
+
+      saveMessage(
+          sender: sender,
+          receiver: receiver,
+          text: fileUrl,
+          timeSent: timeSent,
+          messageId: messageId,
+          messageType: messageType);
+    } catch (e) {
+      showSnackBar(context: context, content: e.toString());
+    }
+  }
 }

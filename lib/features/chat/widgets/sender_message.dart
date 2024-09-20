@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:social_media_chat_app/features/common/enums/message_type.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
 
 class SenderMessageCard extends StatelessWidget {
@@ -6,9 +7,11 @@ class SenderMessageCard extends StatelessWidget {
     super.key,
     required this.message,
     required this.date,
+    required this.messageType,
   });
   final String message;
   final String date;
+  final MessageType messageType;
 
   @override
   Widget build(BuildContext context) {

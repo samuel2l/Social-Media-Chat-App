@@ -6,9 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import 'package:social_media_chat_app/features/chat/controller/chat_controller.dart';
+import 'package:social_media_chat_app/features/chat/widgets/receiver_message.dart';
 import 'package:social_media_chat_app/models/message_model.dart';
-import 'package:social_media_chat_app/widgets/my_message_card.dart';
-import 'package:social_media_chat_app/widgets/sender_message_card.dart';
+import 'package:social_media_chat_app/features/chat/widgets/sender_message.dart';
 
 class Messages extends ConsumerStatefulWidget {
   final String receiveruid;
@@ -45,11 +45,13 @@ class _MessagesState extends ConsumerState<Messages> {
                 return MyMessageCard(
                   message: message.text,
                   date: DateFormat.Hm().format(message.timeSent),
+                messageType: message.messageType,
                 );
               }
               return SenderMessageCard(
                   message: message.text,
                   date: DateFormat.Hm().format(message.timeSent),
+                  messageType: message.messageType,
               );
             },
           );
