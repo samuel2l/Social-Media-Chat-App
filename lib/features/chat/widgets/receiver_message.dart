@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:social_media_chat_app/features/chat/widgets/message.dart';
 import 'package:social_media_chat_app/features/common/enums/message_type.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
 
@@ -31,12 +32,7 @@ class MyMessageCard extends StatelessWidget {
                   top: 5,
                   bottom: 20,
                 ),
-                child: Text(
-                  message,
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
+                child: Message(message: message, messageType: messageType)
               ),
               Positioned(
                 bottom: 4,

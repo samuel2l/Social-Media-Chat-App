@@ -38,24 +38,30 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
   void sendFile(
     File file,
     MessageType messageType,
-  ) async{
-var userData =
-        await FirebaseFirestore.instance.collection('users').doc(widget.receiverUid).get();
+  ) async {
+    var userData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.receiverUid)
+        .get();
     UserModel? receiver;
     if (userData.data() != null) {
       receiver = UserModel.fromMap(userData.data()!);
     }
-    ref.read(chatControllerProvider).sendFile(context: context, file: file, receiver: receiver!, messageType: messageType);
-        
+    ref.read(chatControllerProvider).sendFile(
+        context: context,
+        file: file,
+        receiver: receiver!,
+        messageType: messageType);
   }
-  void sendImage()async{
-    File? image=await pickImageFromGallery(context);
-    if(image!=null){
+
+  void sendImage() async {
+    print('eeeee');
+    File? image = await pickImageFromGallery(context);
+    if (image != null) {
       sendFile(image, MessageType.image);
     }
+    print('donee');
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +110,7 @@ var userData =
                     ),
                   ),
                 ),
-                suffixIcon:  SizedBox(
+                suffixIcon: SizedBox(
                   width: 100,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -113,9 +119,10 @@ var userData =
                         child: const Icon(
                           Icons.camera_alt,
                           color: Colors.grey,
-
                         ),
-                        onTap: () => sendImage,
+                        onTap: () {
+                          sendImage();
+                        },
                       ),
                       GestureDetector(
                         child: const Icon(
