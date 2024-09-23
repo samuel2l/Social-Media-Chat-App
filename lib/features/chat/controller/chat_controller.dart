@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/auth/controller/auth_controller.dart';
-import 'package:social_media_chat_app/features/auth/respository/auth_repository.dart';
 import 'package:social_media_chat_app/features/chat/repository/chat_repository.dart';
 import 'package:social_media_chat_app/features/common/enums/message_type.dart';
 import 'package:social_media_chat_app/models/chat_contact_model.dart';
