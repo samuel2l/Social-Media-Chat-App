@@ -182,6 +182,7 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
                         setState(() {
                           messageController.text =
                               messageController.text + emoji.emoji;
+                          
                         });
                       }
                     },
