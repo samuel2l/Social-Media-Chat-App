@@ -61,7 +61,12 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
       sendFile(image, MessageType.image);
     }
   }
-
+// void sendGIF() async {
+//     final gif = await pickGIF(context);
+//     if (gif != null) {
+//       ref.read(chatControllerProvider).sendGIF(context: context, gifURL: gif.url, receiverUid: widget.receiverUid);
+//     }
+//   }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -117,7 +122,7 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
                                     ),
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: (){},
                               child: const Icon(
                                 Icons.gif,
                                 color: Colors.grey,
