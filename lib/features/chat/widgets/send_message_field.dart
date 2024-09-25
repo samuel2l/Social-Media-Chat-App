@@ -5,6 +5,8 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sound/public/flutter_sound_recorder.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:social_media_chat_app/features/chat/controller/chat_controller.dart';
 import 'package:social_media_chat_app/features/common/enums/message_type.dart';
 import 'package:social_media_chat_app/features/common/utils/utils.dart';
@@ -26,13 +28,36 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
   bool isEmojiSelected = false;
   FocusNode focusNode = FocusNode();
   FlutterSoundRecorder? soundRecorder;
+  bool isRecorderInit = false;
+  bool isAudio = false;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    soundRecorder=FlutterSoundRecorder();
+    soundRecorder = FlutterSoundRecorder();
+    openAudio();
   }
-  void sendText() {
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    messageController.dispose();
+    soundRecorder!.closeRecorder();
+    isRecorderInit = false;
+    super.dispose();
+  }
+
+  void openAudio() async {
+    final status = await Permission.microphone.request();
+    if (status != PermissionStatus.granted) {
+      throw RecordingPermissionException('Mic permission not allowed!');
+    }
+    await soundRecorder!.openRecorder();
+    isRecorderInit = true;
+  }
+
+  void sendText() async{
     if (isMessage) {
       ref.read(chatControllerProvider).sendText(
           context: context,
@@ -41,6 +66,15 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
       setState(() {
         messageController.text = '';
       });
+    }else{
+      //if you were recording message and then hit the send button
+      if(isAudio){
+        await soundRecorder!.stopRecorder();
+      }else{
+        var tempDir = await getTemporaryDirectory();
+      // var path = '${tempDir.path}/flutter_sound.aac';
+        await soundRecorder!.startRecorder();
+      }
     }
   }
 
@@ -69,6 +103,7 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
       sendFile(image, MessageType.image);
     }
   }
+
 // void sendGIF() async {
 //     final gif = await pickGIF(context);
 //     if (gif != null) {
@@ -130,7 +165,7 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
                                     ),
                             ),
                             GestureDetector(
-                              onTap: (){},
+                              onTap: () {},
                               child: const Icon(
                                 Icons.gif,
                                 color: Colors.grey,
@@ -195,7 +230,6 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
                         setState(() {
                           messageController.text =
                               messageController.text + emoji.emoji;
-                          
                         });
                       }
                     },
