@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_sound/public/flutter_sound_recorder.dart';
 import 'package:social_media_chat_app/features/chat/controller/chat_controller.dart';
 import 'package:social_media_chat_app/features/common/enums/message_type.dart';
 import 'package:social_media_chat_app/features/common/utils/utils.dart';
@@ -24,6 +25,13 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
   var messageController = TextEditingController();
   bool isEmojiSelected = false;
   FocusNode focusNode = FocusNode();
+  FlutterSoundRecorder? soundRecorder;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    soundRecorder=FlutterSoundRecorder();
+  }
   void sendText() {
     if (isMessage) {
       ref.read(chatControllerProvider).sendText(
