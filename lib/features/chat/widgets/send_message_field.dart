@@ -8,7 +8,9 @@ import 'package:flutter_sound/public/flutter_sound_recorder.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:social_media_chat_app/features/chat/controller/chat_controller.dart';
+import 'package:social_media_chat_app/features/chat/widgets/reply_header.dart';
 import 'package:social_media_chat_app/features/common/enums/message_type.dart';
+import 'package:social_media_chat_app/features/common/providers/reply_provider.dart';
 import 'package:social_media_chat_app/features/common/utils/utils.dart';
 import 'package:social_media_chat_app/models/user_model.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
@@ -121,12 +123,16 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
 //       ref.read(chatControllerProvider).sendGIF(context: context, gifURL: gif.url, receiverUid: widget.receiverUid);
 //     }
 //   }
+
   @override
   Widget build(BuildContext context) {
+    final reply=ref.watch(replyProvider);
+    final isReply=reply!=null;
     return SafeArea(
       child: Column(
         children: [
           // wrap the send message field with a column so the container for emojis can be displayed below it when tapped
+          isReply? const ReplyHeader():const SizedBox(),
           Row(
             children: [
               Expanded(

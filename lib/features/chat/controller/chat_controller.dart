@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/auth/controller/auth_controller.dart';
 import 'package:social_media_chat_app/features/chat/repository/chat_repository.dart';
 import 'package:social_media_chat_app/features/common/enums/message_type.dart';
+import 'package:social_media_chat_app/features/common/providers/reply_provider.dart';
 import 'package:social_media_chat_app/models/chat_contact_model.dart';
 import 'package:social_media_chat_app/models/message_model.dart';
 import 'package:social_media_chat_app/models/user_model.dart';
@@ -28,7 +29,7 @@ class ChatController {
         context: context,
         text: text,
         receiverUid: receiverUid,
-        sender: value!));
+        sender: value!, reply: ref.read(replyProvider)));
   }
 
   Stream<List<ChatContact>> getChats() {
@@ -59,7 +60,7 @@ class ChatController {
   //     required String receiverUid,
 
   // }) {
-  //   ref.read(getUserProvider).whenData((value) => chatRepository.sendGIF(context: context, gifURL: gifURL, receiverUid: receiverUid, sender: value!));
+  //   ref.read(getUserProvider).whenData((value) => chatRepository.sendGIF(context: context, gifURL: gifURL, receiverUid: receiverUid, sender: value!,reply:reply: ref.read(replyProvider)));
   // }
 
 }

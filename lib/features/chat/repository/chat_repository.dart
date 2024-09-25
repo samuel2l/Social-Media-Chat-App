@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/common/enums/message_type.dart';
+import 'package:social_media_chat_app/features/common/providers/reply_provider.dart';
 import 'package:social_media_chat_app/features/common/repository/firebase_storage.dart';
 import 'package:social_media_chat_app/features/common/utils/utils.dart';
 import 'package:social_media_chat_app/models/chat_contact_model.dart';
@@ -64,6 +65,7 @@ class ChatRepository {
     required DateTime timeSent,
     required String messageId,
     required MessageType messageType,
+    required Reply? reply,
   }) async {
     final message = Message(
         senderUid: sender.uid,
@@ -72,7 +74,10 @@ class ChatRepository {
         messageType: messageType,
         timeSent: timeSent,
         messageId: messageId,
-        isSeen: false);
+        isSeen: false,
+        repliedMessage: reply==null?'':reply.message,
+        repliedTo: reply==null?'':reply.isMe?sender.name:receiver.name,
+        repliedMessageType: reply==null?MessageType.text:reply.messageType);
 
     await firestore
         .collection('users')
@@ -101,7 +106,9 @@ class ChatRepository {
       {required BuildContext context,
       required String text,
       required String receiverUid,
-      required UserModel sender}) async {
+      required UserModel sender,
+      required Reply? reply
+      }) async {
     try {
       var timeSent = DateTime.now();
       var messageId = const Uuid().v1();
@@ -118,7 +125,7 @@ class ChatRepository {
           text: text,
           timeSent: timeSent,
           messageId: messageId,
-          messageType: MessageType.text);
+          messageType: MessageType.text, reply: reply);
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }
@@ -220,7 +227,7 @@ class ChatRepository {
           text: fileUrl,
           timeSent: timeSent,
           messageId: messageId,
-          messageType: messageType);
+          messageType: messageType, reply: null);
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }
@@ -230,7 +237,7 @@ class ChatRepository {
   //     {required BuildContext context,
   //     required String gifURL,
   //     required String receiverUid,
-  //     required UserModel sender}) async {
+  //     required UserModel sender,required Reply? reply}) async {
   //   try {
   //     var timeSent = DateTime.now();
   //     var messageId = const Uuid().v1();
@@ -247,7 +254,10 @@ class ChatRepository {
   //         text: gifURL,
   //         timeSent: timeSent,
   //         messageId: messageId,
-  //         messageType: MessageType.gif);
+  //         messageType: MessageType.gif,
+  //         reply:reply
+  // 
+  // );
   //   } catch (e) {
   //     showSnackBar(context: context, content: e.toString());
   //   }

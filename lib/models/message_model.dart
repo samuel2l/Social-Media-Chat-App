@@ -4,15 +4,27 @@ import 'dart:convert';
 import 'package:social_media_chat_app/features/common/enums/message_type.dart';
 
 class Message {
- final String senderUid;
- final String receiverUid;
- final String text;
- final MessageType messageType;
- final DateTime timeSent;
- final String messageId;
-final bool isSeen;
-  Message({required this.senderUid, required this.receiverUid, required this.text, required this.messageType, required this.timeSent,required this.messageId,required this.isSeen});  
-
+  final String senderUid;
+  final String receiverUid;
+  final String text;
+  final MessageType messageType;
+  final DateTime timeSent;
+  final String messageId;
+  final bool isSeen;
+  final String repliedMessage;
+  final String repliedTo;
+  final MessageType repliedMessageType;
+  Message(
+      {required this.senderUid,
+      required this.receiverUid,
+      required this.text,
+      required this.messageType,
+      required this.timeSent,
+      required this.messageId,
+      required this.isSeen,
+      required this.repliedMessage,
+      required this.repliedTo,
+      required this.repliedMessageType});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -24,6 +36,9 @@ final bool isSeen;
       'timeSent': timeSent.millisecondsSinceEpoch,
       'messageId': messageId,
       'isSeen': isSeen,
+      'repliedMessage':repliedMessage,
+       'repliedTo':repliedTo,
+        'repliedMessageType':repliedMessageType.type,
     };
   }
 
@@ -36,10 +51,14 @@ final bool isSeen;
       timeSent: DateTime.fromMillisecondsSinceEpoch(map['timeSent'] as int),
       messageId: map['messageId'] as String,
       isSeen: map['isSeen'] as bool,
+      repliedMessage: map['repliedMessage'] as String,
+      repliedTo: map['repliedTo'] as String,
+      repliedMessageType: (map['repliedMessageType'] as String).toEnum(),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Message.fromJson(String source) => Message.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Message.fromJson(String source) =>
+      Message.fromMap(json.decode(source) as Map<String, dynamic>);
 }
