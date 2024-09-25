@@ -41,6 +41,7 @@ class _MessagesState extends ConsumerState<Messages> {
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               var message=snapshot.data![index];
+              
               if (message.senderUid==FirebaseAuth.instance.currentUser!.uid) {
                 return MyMessageCard(
                   message: message.text,
