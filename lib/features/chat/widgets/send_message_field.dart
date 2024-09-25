@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:flutter_sound/public/flutter_sound_recorder.dart';
-// import 'package:path_provider/path_provider.dart';
+import 'package:flutter_sound/public/flutter_sound_recorder.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:social_media_chat_app/features/chat/controller/chat_controller.dart';
 import 'package:social_media_chat_app/features/common/enums/message_type.dart';
@@ -27,7 +27,7 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
   var messageController = TextEditingController();
   bool isEmojiSelected = false;
   FocusNode focusNode = FocusNode();
-  // FlutterSoundRecorder? soundRecorder;
+  FlutterSoundRecorder? soundRecorder;
   bool isRecorderInit = false;
   bool isAudio = false;
 
@@ -35,7 +35,7 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // soundRecorder = FlutterSoundRecorder();
+    soundRecorder = FlutterSoundRecorder();
     openAudio();
   }
 
@@ -43,7 +43,7 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
   void dispose() {
     // TODO: implement dispose
     messageController.dispose();
-    // soundRecorder!.closeRecorder();
+    soundRecorder!.closeRecorder();
     isRecorderInit = false;
     super.dispose();
   }
@@ -51,9 +51,9 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
   void openAudio() async {
     final status = await Permission.microphone.request();
     if (status != PermissionStatus.granted) {
-      // throw RecordingPermissionException('Mic permission not allowed!');
+      throw RecordingPermissionException('Mic permission not allowed!');
     }
-    // await soundRecorder!.openRecorder();
+    await soundRecorder!.openRecorder();
     isRecorderInit = true;
   }
 
@@ -67,20 +67,20 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
         messageController.text = '';
       });
     } else {
-      // var tempDir = await getTemporaryDirectory();
-      // var path = '${tempDir.path}/flutter_sound.aac';
+      var tempDir = await getTemporaryDirectory();
+      var path = '${tempDir.path}/flutter_sound.aac';
       if (!isRecorderInit) {
         return;
       }
       //if you were recording message and then hit the send button
 
       if (isAudio) {
-      //   await soundRecorder!.stopRecorder();
-      //   sendFile(File(path), MessageType.audio);
-      // } else {
-      //   await soundRecorder!.startRecorder(
-      //     toFile: path,
-      //   );
+        await soundRecorder!.stopRecorder();
+        sendFile(File(path), MessageType.audio);
+      } else {
+        await soundRecorder!.startRecorder(
+          toFile: path,
+        );
       }
 
       setState(() {

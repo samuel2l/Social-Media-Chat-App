@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_chat_app/features/common/enums/message_type.dart';
@@ -14,7 +15,7 @@ class Message extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final AudioPlayer audioPlayer = AudioPlayer();
+    final AudioPlayer audioPlayer = AudioPlayer();
     bool isPlaying = false;
 
     return messageType == MessageType.text
@@ -33,16 +34,17 @@ class Message extends StatelessWidget {
                         minWidth: 100,
                       ),
                       onPressed: () async {
-                        // if (isPlaying) {
-                        //   await audioPlayer.pause();
-                        //   setState(() {
-                        //     isPlaying = false;
-                        //   });
-                        // } else {
-                        //   await audioPlayer.play(UrlSource(message));
+                        if (isPlaying) {
+                          await audioPlayer.pause();
+                          setState(() {
+                            isPlaying = false;
+                          });
+                        } else {
+                          await audioPlayer.play(UrlSource(message));
                           setState(() {
                             isPlaying = true;
                           });
+                        }
                         
                       },
                       icon: Icon(

@@ -1145,6 +1145,8 @@ PODS:
     - abseil/meta/type_traits
     - abseil/xcprivacy
   - abseil/xcprivacy (1.20240116.2)
+  - audioplayers_darwin (0.0.1):
+    - Flutter
   - BoringSSL-GRPC (0.0.36):
     - BoringSSL-GRPC/Implementation (= 0.0.36)
     - BoringSSL-GRPC/Interface (= 0.0.36)
@@ -1229,6 +1231,10 @@ PODS:
   - Flutter (1.0.0)
   - flutter_contacts (0.0.1):
     - Flutter
+  - flutter_sound (9.16.0):
+    - Flutter
+    - flutter_sound_core (= 9.16.0)
+  - flutter_sound_core (9.16.0)
   - GoogleUtilities/AppDelegateSwizzler (8.0.2):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -1363,6 +1369,7 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
+  - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - emoji_picker_flutter (from `.symlinks/plugins/emoji_picker_flutter/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
@@ -1370,6 +1377,7 @@ DEPENDENCIES:
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `Flutter`)
   - flutter_contacts (from `.symlinks/plugins/flutter_contacts/ios`)
+  - flutter_sound (from `.symlinks/plugins/flutter_sound/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
@@ -1391,6 +1399,7 @@ SPEC REPOS:
     - FirebaseFirestoreInternal
     - FirebaseSharedSwift
     - FirebaseStorage
+    - flutter_sound_core
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core
@@ -1400,6 +1409,8 @@ SPEC REPOS:
     - RecaptchaInterop
 
 EXTERNAL SOURCES:
+  audioplayers_darwin:
+    :path: ".symlinks/plugins/audioplayers_darwin/ios"
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
   emoji_picker_flutter:
@@ -1414,6 +1425,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_contacts:
     :path: ".symlinks/plugins/flutter_contacts/ios"
+  flutter_sound:
+    :path: ".symlinks/plugins/flutter_sound/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   path_provider_foundation:
@@ -1427,6 +1440,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   abseil: d121da9ef7e2ff4cab7666e76c5a3e0915ae08c3
+  audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   BoringSSL-GRPC: ca6a8e5d04812fce8ffd6437810c2d46f925eaeb
   cloud_firestore: c44f5943a6f7fc1775cfa4a1e980a0024ed565ee
   emoji_picker_flutter: fe2e6151c5b548e975d546e6eeb567daf0962a58
@@ -1446,6 +1460,8 @@ SPEC CHECKSUMS:
   FirebaseStorage: f9e2bf027d549db18b6195a37b31c85f56e40200
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_contacts: edb1c5ce76aa433e20e6cb14c615f4c0b66e0983
+  flutter_sound: 2a7073dee21936d166987189b30b7009225ca502
+  flutter_sound_core: a846fcaf846c191dbbbf070945765ed6e8f49279
   GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
   "gRPC-C++": 2fa52b3141e7789a28a737f251e0c45b4cb20a87
   gRPC-Core: a27c294d6149e1c39a7d173527119cfbc3375ce4
