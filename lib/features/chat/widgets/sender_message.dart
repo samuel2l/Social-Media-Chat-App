@@ -33,7 +33,6 @@ class _SenderMessageCardState extends ConsumerState<SenderMessageCard> {
   Widget build(BuildContext context) {
         return SwipeTo(
       onRightSwipe: (details){
-        print('on right swipe');
         widget.onSwipe();
         },
       child: Align(

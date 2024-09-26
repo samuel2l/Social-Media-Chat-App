@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/chat/widgets/message.dart';
 import 'package:social_media_chat_app/features/common/enums/message_type.dart';
+
 import 'package:social_media_chat_app/utils/colors.dart';
 import 'package:swipe_to/swipe_to.dart';
-
-
 
 class MyMessageCard extends ConsumerStatefulWidget {
   final String message;
@@ -26,13 +25,11 @@ class MyMessageCard extends ConsumerStatefulWidget {
       required this.username,
       required this.onSwipe});
 
-
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _MyMessageCardState();
 }
 
 class _MyMessageCardState extends ConsumerState<MyMessageCard> {
-
   @override
   Widget build(BuildContext context) {
     return SwipeTo(
@@ -54,13 +51,53 @@ class _MyMessageCardState extends ConsumerState<MyMessageCard> {
             child: Stack(
               children: [
                 Padding(
-                    padding: const EdgeInsets.only(
-                      left: 10,
-                      right: 30,
-                      top: 5,
-                      bottom: 20,
-                    ),
-                    child: Message(message: widget.message, messageType: widget.messageType)),
+                  padding: widget.messageType == MessageType.text
+                      ? const EdgeInsets.only(
+                          left: 10,
+                          right: 30,
+                          top: 5,
+                          bottom: 20,
+                        )
+                      : const EdgeInsets.only(
+                          left: 5,
+                          top: 5,
+                          right: 5,
+                          bottom: 25,
+                        ),
+                  child: Column(
+                    children: [
+                      // the spread operator) is used to insert multiple elements into a collection, such as a list, set, or map. This is particularly useful when you want to conditionally add items or merge multiple collections.
+
+                      if (widget.repliedMessageContent.isNotEmpty) ...[
+                        Text(
+                          widget.username,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 3),
+                        Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: backgroundColor.withOpacity(0.5),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(
+                                  5,
+                                ),
+                              ),
+                            ),
+                            child: Message(
+                                message: widget.repliedMessageContent,
+                                messageType: widget.repliedMessageType)),
+                        const SizedBox(height: 8),
+                      ],
+                      Message(
+                        message: widget.message,
+                        messageType: widget.messageType,
+                      ),
+                    ],
+                  ),
+                ),
                 Positioned(
                   bottom: 4,
                   right: 10,
