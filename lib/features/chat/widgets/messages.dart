@@ -28,6 +28,7 @@ class _MessagesState extends ConsumerState<Messages> {
     bool isMe,
     MessageType messageType,
   ) {
+    print('in on msg swipe funccccccc');
     ref.read(replyProvider.notifier).update(
           (state) => Reply(
             message,
@@ -66,11 +67,9 @@ class _MessagesState extends ConsumerState<Messages> {
                   repliedMessageType: message.repliedMessageType,
                   repliedMessageContent: message.repliedMessage,
                   username: message.repliedTo,
-                  onSwipe: () => onMessageSwipe(
-                    message.text,
-                    true,
-                    message.messageType,
-                  ),
+                  onSwipe: () {
+                    onMessageSwipe(message.text, true, message.messageType);
+                  },
                 );
               }
               return SenderMessageCard(

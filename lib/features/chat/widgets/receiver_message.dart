@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/chat/widgets/message.dart';
 import 'package:social_media_chat_app/features/common/enums/message_type.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
 import 'package:swipe_to/swipe_to.dart';
 
-class MyMessageCard extends StatelessWidget {
+
+
+class MyMessageCard extends ConsumerStatefulWidget {
   final String message;
   final String date;
   final MessageType messageType;
@@ -23,10 +26,19 @@ class MyMessageCard extends StatelessWidget {
       required this.username,
       required this.onSwipe});
 
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _MyMessageCardState();
+}
+
+class _MyMessageCardState extends ConsumerState<MyMessageCard> {
+
   @override
   Widget build(BuildContext context) {
     return SwipeTo(
-      // onLeftSwipe: on,
+      onLeftSwipe: (details) {
+        widget.onSwipe();
+      },
       child: Align(
         alignment: Alignment.centerRight,
         child: ConstrainedBox(
@@ -48,14 +60,14 @@ class MyMessageCard extends StatelessWidget {
                       top: 5,
                       bottom: 20,
                     ),
-                    child: Message(message: message, messageType: messageType)),
+                    child: Message(message: widget.message, messageType: widget.messageType)),
                 Positioned(
                   bottom: 4,
                   right: 10,
                   child: Row(
                     children: [
                       Text(
-                        date,
+                        widget.date,
                         style: const TextStyle(
                           fontSize: 13,
                           color: Colors.white60,

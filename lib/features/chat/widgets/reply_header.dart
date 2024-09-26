@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:social_media_chat_app/features/chat/widgets/message.dart';
 import 'package:social_media_chat_app/features/common/providers/reply_provider.dart';
 
 class ReplyHeader extends ConsumerWidget {
   const ReplyHeader({super.key});
 
   void cancelReply(WidgetRef ref) {
- ref.read(replyProvider.notifier).update((state) => null);
-
-   }
+    ref.read(replyProvider.notifier).update((state) => null);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -50,6 +50,7 @@ class ReplyHeader extends ConsumerWidget {
           //   message: reply.message,
           //   type: reply.messageTyoe,
           // ),
+          Message(message: reply.message, messageType: reply.messageType)
         ],
       ),
     );

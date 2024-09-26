@@ -5,10 +5,10 @@ import 'package:social_media_chat_app/features/common/enums/message_type.dart';
 
 class Message extends StatelessWidget {
   const Message({
-    Key? key,
+    super.key,
     required this.message,
     required this.messageType,
-  }) : super(key: key);
+  });
 
   final String message;
   final MessageType messageType;
@@ -17,6 +17,7 @@ class Message extends StatelessWidget {
   Widget build(BuildContext context) {
     final AudioPlayer audioPlayer = AudioPlayer();
     bool isPlaying = false;
+    
 
     return messageType == MessageType.text
         ? Text(

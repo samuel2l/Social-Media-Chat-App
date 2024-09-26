@@ -126,13 +126,15 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
 
   @override
   Widget build(BuildContext context) {
-    final reply=ref.watch(replyProvider);
-    final isReply=reply!=null;
+    final reply = ref.watch(replyProvider);
+    print('reply ');
+    print(reply);
+    final isReply = reply != null;
     return SafeArea(
       child: Column(
         children: [
           // wrap the send message field with a column so the container for emojis can be displayed below it when tapped
-          isReply? const ReplyHeader():const SizedBox(),
+          isReply ? const ReplyHeader() : const SizedBox(),
           Row(
             children: [
               Expanded(
@@ -231,16 +233,19 @@ class _SendMessageFieldState extends ConsumerState<SendMessageField> {
                 child: CircleAvatar(
                   backgroundColor: tabColor,
                   child: GestureDetector(
-                    onLongPress: (){
-                      if(!isMessage){
-                        sendText();
-                      }
-                    },
+                      onLongPress: () {
+                        if (!isMessage) {
+                          sendText();
+                        }
+                      },
                       onTap: () {
-
                         sendText();
                       },
-                      child: Icon(isMessage ? Icons.send : isAudio?Icons.close: Icons.mic)),
+                      child: Icon(isMessage
+                          ? Icons.send
+                          : isAudio
+                              ? Icons.close
+                              : Icons.mic)),
                 ),
               )
             ],
