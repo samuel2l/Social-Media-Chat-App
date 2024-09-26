@@ -67,7 +67,7 @@ class _MyMessageCardState extends ConsumerState<MyMessageCard> {
                   child: Column(
                     children: [
                       // the spread operator) is used to insert multiple elements into a collection, such as a list, set, or map. This is particularly useful when you want to conditionally add items or merge multiple collections.
-
+// Without the ... operator, you would get an error trying to insert a list where individual widgets are expected. It essentially unpacks the list into its components.
                       if (widget.repliedMessageContent.isNotEmpty) ...[
                         Text(
                           widget.username,

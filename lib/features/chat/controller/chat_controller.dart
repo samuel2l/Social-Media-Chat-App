@@ -29,7 +29,8 @@ class ChatController {
         context: context,
         text: text,
         receiverUid: receiverUid,
-        sender: value!, reply: ref.read(replyProvider)));
+        sender: value!,
+        reply: ref.read(replyProvider)));
   }
 
   Stream<List<ChatContact>> getChats() {
@@ -53,14 +54,14 @@ class ChatController {
         sender: value!,
         ref: ref,
         messageType: messageType));
+    ref.read(replyProvider.notifier).update((state) => null);
   }
   //   void sendGIF({
   //   required BuildContext context,
-  //   required String gifURL,
+  //   required String gifURL,A very lo
   //     required String receiverUid,
 
   // }) {
   //   ref.read(getUserProvider).whenData((value) => chatRepository.sendGIF(context: context, gifURL: gifURL, receiverUid: receiverUid, sender: value!,reply:reply: ref.read(replyProvider)));
   // }
-
 }
