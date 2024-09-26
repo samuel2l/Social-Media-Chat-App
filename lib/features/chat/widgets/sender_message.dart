@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:social_media_chat_app/features/chat/widgets/message.dart';
 import 'package:social_media_chat_app/features/common/enums/message_type.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
 import 'package:swipe_to/swipe_to.dart';
-
 
 class SenderMessageCard extends ConsumerStatefulWidget {
   const SenderMessageCard({
@@ -24,17 +24,17 @@ class SenderMessageCard extends ConsumerStatefulWidget {
   final String username;
   final VoidCallback onSwipe;
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _SenderMessageCardState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _SenderMessageCardState();
 }
 
 class _SenderMessageCardState extends ConsumerState<SenderMessageCard> {
-
   @override
   Widget build(BuildContext context) {
-        return SwipeTo(
-      onRightSwipe: (details){
+    return SwipeTo(
+      onRightSwipe: (details) {
         widget.onSwipe();
-        },
+      },
       child: Align(
         alignment: Alignment.centerLeft,
         child: ConstrainedBox(
@@ -56,11 +56,36 @@ class _SenderMessageCardState extends ConsumerState<SenderMessageCard> {
                     top: 5,
                     bottom: 20,
                   ),
-                  child: Text(
-                    widget.message,
-                    style: const TextStyle(
-                      fontSize: 16,
-                    ),
+                  child: Column(
+                    children: [
+                      if (widget.repliedMessageContent.isNotEmpty) ...[
+                        Text(
+                          widget.username,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 3),
+                        Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: backgroundColor.withOpacity(0.5),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(
+                                  5,
+                                ),
+                              ),
+                            ),
+                            child: Message(
+                                message: widget.repliedMessageContent,
+                                messageType: widget.repliedMessageType)),
+                        const SizedBox(height: 8),
+                      ],
+                      Message(
+                        message: widget.message,
+                        messageType: widget.messageType,
+                      ),
+                    ],
                   ),
                 ),
                 Positioned(
@@ -80,6 +105,5 @@ class _SenderMessageCardState extends ConsumerState<SenderMessageCard> {
         ),
       ),
     );
-
   }
 }
