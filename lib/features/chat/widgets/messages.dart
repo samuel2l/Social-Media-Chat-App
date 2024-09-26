@@ -28,7 +28,7 @@ class _MessagesState extends ConsumerState<Messages> {
     bool isMe,
     MessageType messageType,
   ) {
-    print('in on msg swipe funccccccc');
+
     ref.read(replyProvider.notifier).update(
           (state) => Reply(
             message,
@@ -76,6 +76,12 @@ class _MessagesState extends ConsumerState<Messages> {
                 message: message.text,
                 date: DateFormat.Hm().format(message.timeSent),
                 messageType: message.messageType,
+                repliedMessageType: message.repliedMessageType,
+                repliedMessageContent: message.repliedMessage,
+                username: message.repliedTo,
+                onSwipe: () {
+                  onMessageSwipe(message.text, false, message.messageType);
+                },
               );
             },
           );
