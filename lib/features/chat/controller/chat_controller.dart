@@ -64,4 +64,15 @@ class ChatController {
   // }) {
   //   ref.read(getUserProvider).whenData((value) => chatRepository.sendGIF(context: context, gifURL: gifURL, receiverUid: receiverUid, sender: value!,reply:reply: ref.read(replyProvider)));
   // }
+  void messageSeen(
+    BuildContext context,
+    String receiverUid,
+    String messageId,
+  ) {
+    chatRepository.messageSeen(
+      context,
+      receiverUid,
+      messageId,
+    );
+  }
 }

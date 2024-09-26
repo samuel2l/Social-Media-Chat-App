@@ -262,4 +262,32 @@ class ChatRepository {
   //     showSnackBar(context: context, content: e.toString());
   //   }
   // }
+
+   void messageSeen(
+    BuildContext context,
+    String receiverUid,
+    String messageId,
+  ) async {
+    try {
+      await firestore
+          .collection('users')
+          .doc(auth.currentUser!.uid)
+          .collection('chats')
+          .doc(receiverUid)
+          .collection('messages')
+          .doc(messageId)
+          .update({'isSeen': true});
+
+      await firestore
+          .collection('users')
+          .doc(receiverUid)
+          .collection('chats')
+          .doc(auth.currentUser!.uid)
+          .collection('messages')
+          .doc(messageId)
+          .update({'isSeen': true});
+    } catch (e) {
+      showSnackBar(context: context, content: e.toString());
+    }
+  }
 }

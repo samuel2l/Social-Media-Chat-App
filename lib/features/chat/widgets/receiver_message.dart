@@ -14,8 +14,10 @@ class MyMessageCard extends ConsumerStatefulWidget {
   final String repliedMessageContent;
   final String username;
   final VoidCallback onSwipe;
+  final bool isSeen;
+  
 
-  const MyMessageCard(
+  const MyMessageCard( 
       {super.key,
       required this.message,
       required this.date,
@@ -23,7 +25,8 @@ class MyMessageCard extends ConsumerStatefulWidget {
       required this.repliedMessageType,
       required this.repliedMessageContent,
       required this.username,
-      required this.onSwipe});
+      required this.onSwipe,
+      required this.isSeen});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _MyMessageCardState();
@@ -113,11 +116,12 @@ class _MyMessageCardState extends ConsumerState<MyMessageCard> {
                       const SizedBox(
                         width: 5,
                       ),
-                      const Icon(
+                       Icon(
                         Icons.done_all,
                         size: 20,
-                        color: Colors.white60,
+                        color: widget.isSeen?Colors.white60:Colors.blue,
                       ),
+                      
                     ],
                   ),
                 ),

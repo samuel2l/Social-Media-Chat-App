@@ -58,6 +58,10 @@ class _MessagesState extends ConsumerState<Messages> {
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               var message = snapshot.data![index];
+              //if I am the receiver and the message has not yet been labeled as seen then set the message as seen
+              if (message.receiverUid == FirebaseAuth.instance.currentUser!.uid && message.isSeen==false) {
+                ref.read(chatControllerProvider).messageSeen(context, message.receiverUid, message.messageId);
+              }
 
               if (message.senderUid == FirebaseAuth.instance.currentUser!.uid) {
                 return MyMessageCard(
@@ -69,7 +73,7 @@ class _MessagesState extends ConsumerState<Messages> {
                   username: message.repliedTo,
                   onSwipe: () {
                     onMessageSwipe(message.text, true, message.messageType);
-                  },
+                  }, isSeen: message.isSeen,
                 );
               }
               return SenderMessageCard(
