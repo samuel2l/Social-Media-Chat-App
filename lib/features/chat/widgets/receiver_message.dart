@@ -119,7 +119,7 @@ class _MyMessageCardState extends ConsumerState<MyMessageCard> {
                        Icon(
                         Icons.done_all,
                         size: 20,
-                        color: widget.isSeen?Colors.white60:Colors.blue,
+                        color: widget.isSeen?Colors.blue:Colors.white38,
                       ),
                       
                     ],

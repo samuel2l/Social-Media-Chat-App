@@ -59,8 +59,8 @@ class _MessagesState extends ConsumerState<Messages> {
             itemBuilder: (context, index) {
               var message = snapshot.data![index];
               //if I am the receiver and the message has not yet been labeled as seen then set the message as seen
-              if (message.receiverUid == FirebaseAuth.instance.currentUser!.uid && message.isSeen==false) {
-                ref.read(chatControllerProvider).messageSeen(context, message.receiverUid, message.messageId);
+              if (!message.isSeen && message.receiverUid == FirebaseAuth.instance.currentUser!.uid ) {
+                ref.read(chatControllerProvider).messageSeen(context, widget.receiveruid, message.messageId);
               }
 
               if (message.senderUid == FirebaseAuth.instance.currentUser!.uid) {
