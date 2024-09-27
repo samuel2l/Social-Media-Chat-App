@@ -107,7 +107,7 @@ class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
           controller: tabController,
           children:const [
             ContactsList(),
-            Story(),
+            Stories(),
             Text('CALLS')
 
           ],
