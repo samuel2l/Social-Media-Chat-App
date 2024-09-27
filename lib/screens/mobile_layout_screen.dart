@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/auth/controller/auth_controller.dart';
 import 'package:social_media_chat_app/features/common/utils/utils.dart';
 import 'package:social_media_chat_app/features/contacts/screens/contacts.dart';
+import 'package:social_media_chat_app/features/story/screens/confirm_story_post.dart';
 import 'package:social_media_chat_app/features/story/screens/stories.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
 import 'package:social_media_chat_app/features/chat/screens/contacts_list.dart';
@@ -119,7 +120,7 @@ class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
             }else if(tabController.index==1){
               File? img=await pickImageFromGallery(context);
               if(img!=null){
-                
+                Navigator.pushNamed(context, ConfirmStoryPost.routeName,arguments: img);
               }
 
             }else{

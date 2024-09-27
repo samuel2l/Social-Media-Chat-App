@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:social_media_chat_app/features/auth/screens/login.dart';
 import 'package:social_media_chat_app/features/auth/screens/otp.dart';
 import 'package:social_media_chat_app/features/auth/screens/user_profile.dart';
 import 'package:social_media_chat_app/features/contacts/screens/contacts.dart';
 import 'package:social_media_chat_app/features/chat/screens/chat_screen.dart';
+import 'package:social_media_chat_app/features/story/screens/confirm_story_post.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -36,6 +39,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => MobileChatScreen(name: name, uid: uid,),
       );
+          case ConfirmStoryPost.routeName:
+          final file = settings.arguments as File;
+          
+
+
+      return MaterialPageRoute(
+        builder: (context) => ConfirmStoryPost(file: file),
+      );
+
     default:
       return MaterialPageRoute(
         builder: (context) => const Scaffold(
