@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/story/controller/story_controller.dart';
+import 'package:social_media_chat_app/features/story/screens/view_story.dart';
 import 'package:social_media_chat_app/models/story_model.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
 
@@ -33,7 +34,7 @@ class _StoriesState extends ConsumerState<Stories> {
                   onTap: () {
                     Navigator.pushNamed(
                       context,
-                      Stories.routeName,
+                      StoryScreen.routeName,
                       arguments: story,
                     );
                   },
