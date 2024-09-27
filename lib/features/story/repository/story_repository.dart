@@ -41,12 +41,11 @@ class StoryRepository {
     try {
       var storyId = const Uuid().v1();
       String uid = auth.currentUser!.uid;
-      String imageurl = await ref
-          .read(firebaseStorageRepositoryProvider)
-          .storeFileToFirebase(
-            '/story/$storyId$uid',
-            post,
-          );
+      String imageurl =
+          await ref.read(firebaseStorageRepositoryProvider).storeFileToFirebase(
+                '/story/$storyId$uid',
+                post,
+              );
       List<Contact> contacts = [];
       if (await FlutterContacts.requestPermission()) {
         contacts = await FlutterContacts.getContacts(withProperties: true);
@@ -55,7 +54,7 @@ class StoryRepository {
       List<String> contactsStoryVisibleTo = [];
 
       for (int i = 0; i < contacts.length; i++) {
-        var userDataFirebase = await firestore
+        var contactStoryVisibleTo = await firestore
             .collection('users')
             .where(
               'number',
@@ -65,15 +64,15 @@ class StoryRepository {
                   ),
             )
             .get();
-
-        if (userDataFirebase.docs.isNotEmpty) {
-          var userData = UserModel.fromMap(userDataFirebase.docs[0].data());
+        if (contactStoryVisibleTo.docs.isNotEmpty) {
+          var userData =
+              UserModel.fromMap(contactStoryVisibleTo.docs[0].data());
           contactsStoryVisibleTo.add(userData.uid);
         }
       }
 
       List<String> postUrls = [];
-      var storyesSnapshot = await firestore
+      var storySnapshot = await firestore
           .collection('story')
           .where(
             'uid',
@@ -81,13 +80,13 @@ class StoryRepository {
           )
           .get();
 
-      if (storyesSnapshot.docs.isNotEmpty) {
-        Story story = Story.fromMap(storyesSnapshot.docs[0].data());
+      if (storySnapshot.docs.isNotEmpty) {
+        Story story = Story.fromMap(storySnapshot.docs[0].data());
         postUrls = story.photoUrl;
         postUrls.add(imageurl);
         await firestore
             .collection('story')
-            .doc(storyesSnapshot.docs[0].id)
+            .doc(storySnapshot.docs[0].id)
             .update({
           'photoUrl': postUrls,
         });
@@ -121,7 +120,7 @@ class StoryRepository {
         contacts = await FlutterContacts.getContacts(withProperties: true);
       }
       for (int i = 0; i < contacts.length; i++) {
-        var storyesSnapshot = await firestore
+        var storySnapshot = await firestore
             .collection('story')
             .where(
               'number',
@@ -137,9 +136,10 @@ class StoryRepository {
                   .millisecondsSinceEpoch,
             )
             .get();
-        for (var tempData in storyesSnapshot.docs) {
+        for (var tempData in storySnapshot.docs) {
           Story tempstory = Story.fromMap(tempData.data());
-          if (tempstory.contactsStoryVisibleTo.contains(auth.currentUser!.uid)) {
+          if (tempstory.contactsStoryVisibleTo
+              .contains(auth.currentUser!.uid)) {
             stories.add(tempstory);
           }
         }
