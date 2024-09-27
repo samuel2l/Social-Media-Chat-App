@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/auth/controller/auth_controller.dart';
 import 'package:social_media_chat_app/features/story/repository/story_repository.dart';
+import 'package:social_media_chat_app/models/story_model.dart';
 
 final storyControllerProvider = Provider(
   (ref) {
@@ -30,5 +31,10 @@ class StoryController {
         post: post,
         context: context,
         caption: caption));
+  }
+
+  Future<List<Story>> getStories(BuildContext context)async{
+    var stories=await storyRepository.getStories(context);
+    return stories;
   }
 }

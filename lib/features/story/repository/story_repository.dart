@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_contacts/flutter_contacts.dart';
@@ -124,14 +125,14 @@ class StoryRepository {
     }
   }
 
-  Future<List<Story>> getstory(BuildContext context) async {
+  Future<List<Story>> getStories(BuildContext context) async {
     List<Story> stories = [];
     try {
       List<Contact> contacts = [];
       if (await FlutterContacts.requestPermission()) {
         contacts = await FlutterContacts.getContacts(withProperties: true);
       }
-      print(contacts);
+
       for (int i = 0; i < contacts.length; i++) {
         var storySnapshot = await firestore
             .collection('stories')
@@ -158,9 +159,10 @@ class StoryRepository {
         }
       }
     } catch (e) {
-      // if (kDebugMode) print(e);
+      if (kDebugMode) print(e);
       showSnackBar(context: context, content: e.toString());
     }
     return stories;
   }
+
 }
