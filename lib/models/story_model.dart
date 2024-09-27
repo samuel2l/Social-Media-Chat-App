@@ -6,7 +6,7 @@ class Story {
   final DateTime createdAt;
   final String dp;
   final String storyId;
-  final String caption;
+  final List<String> caption;
   final List<String> contactsStoryVisibleTo;
   Story({
     required this.uid,
@@ -45,7 +45,7 @@ class Story {
       dp: map['dp'] ?? '',
       storyId: map['storyId'] ?? '',
       contactsStoryVisibleTo: List<String>.from(map['contactsStoryVisibleTo']),
-      caption: map['caption'] ?? '',
+      caption: List<String>.from(map['caption']),
     );
   }
 }

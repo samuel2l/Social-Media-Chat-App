@@ -8,39 +8,37 @@ import 'package:social_media_chat_app/utils/colors.dart';
 class ConfirmStoryPost extends ConsumerWidget {
   static const String routeName = '/confirm-story-post';
   final File file;
-  final String caption;
 
-  const ConfirmStoryPost( {super.key, required this.file,required this.caption,});
-void uploadstory(WidgetRef ref,BuildContext context){
-  ref.read(storyControllerProvider).uploadstory(post: file, context: context);
-  Navigator.pop(context);
-}
+  const ConfirmStoryPost({super.key, required this.file});
+  void uploadstory(WidgetRef ref, BuildContext context, caption) {
+    ref
+        .read(storyControllerProvider)
+        .uploadstory(post: file, context: context, caption: caption ?? '');
+    Navigator.pop(context);
+  }
+
   @override
-
   Widget build(BuildContext context, WidgetRef ref) {
+    TextEditingController captionController = TextEditingController();
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: [
-          Text(caption),
-          AspectRatio(
-            aspectRatio: 9 / 16,
-            child: Image.asset(file.path),
-
+        body: Column(children: [
+          TextField(
+            controller: captionController,
           ),
-
-          ]
-        ),
+          Expanded(
+            child: Image.asset(file.path),
+          ),
+        ]),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            uploadstory(ref, context);
+            uploadstory(ref, context, captionController.text.trim());
           },
           backgroundColor: tabColor,
-                    child: const Icon(
+          child: const Icon(
             Icons.done,
             color: Colors.white,
           ),
-
         ),
       ),
     );
