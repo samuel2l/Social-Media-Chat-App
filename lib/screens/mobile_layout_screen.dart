@@ -2,35 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/auth/controller/auth_controller.dart';
 import 'package:social_media_chat_app/features/contacts/screens/contacts.dart';
+import 'package:social_media_chat_app/features/story/screens/stories.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
 import 'package:social_media_chat_app/features/chat/screens/contacts_list.dart';
-
 
 class MobileLayoutScreen extends ConsumerStatefulWidget {
   const MobileLayoutScreen({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _MobileLayoutScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _MobileLayoutScreenState();
 }
 
-class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen> with WidgetsBindingObserver{
-@override
+class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
+    with WidgetsBindingObserver,TickerProviderStateMixin {
+      late TabController tabController;
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    tabController=TabController(length: 3, vsync: this);
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
-        WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
+
   @override
   //we use this method to check if online or not
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-switch (state) {
+    switch (state) {
       case AppLifecycleState.resumed:
         ref.read(authControllerProvider).setUserState(true);
         break;
@@ -40,11 +46,10 @@ switch (state) {
         ref.read(authControllerProvider).setUserState(false);
         break;
       default:
-      print('err');
+        null;
     }
-
-
   }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -72,20 +77,21 @@ switch (state) {
               onPressed: () {},
             ),
           ],
-          bottom: const TabBar(
+          bottom:  TabBar(
+            controller: tabController,
             indicatorColor: tabColor,
             indicatorWeight: 4,
             labelColor: tabColor,
             unselectedLabelColor: Colors.grey,
-            labelStyle: TextStyle(
+            labelStyle:const TextStyle(
               fontWeight: FontWeight.bold,
             ),
-            tabs: [
+            tabs: const[
               Tab(
                 text: 'CHATS',
               ),
               Tab(
-                text: 'STATUS',
+                text: 'STORIES',
               ),
               Tab(
                 text: 'CALLS',
@@ -93,7 +99,15 @@ switch (state) {
             ],
           ),
         ),
-        body: const ContactsList(),
+        body:  TabBarView(
+          controller: tabController,
+          children:const [
+            ContactsList(),
+            Story(),
+            Text('CALLS')
+
+          ],
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.pushNamed(context, ContactsScreen.routeName);
