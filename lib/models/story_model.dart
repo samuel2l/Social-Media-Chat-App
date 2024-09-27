@@ -6,6 +6,7 @@ class Story {
   final DateTime createdAt;
   final String dp;
   final String storyId;
+  final String caption;
   final List<String> contactsStoryVisibleTo;
   Story({
     required this.uid,
@@ -16,6 +17,8 @@ class Story {
     required this.dp,
     required this.storyId,
     required this.contactsStoryVisibleTo,
+        required this.caption,
+
   });
 
   Map<String, dynamic> toMap() {
@@ -28,6 +31,7 @@ class Story {
       'dp': dp,
       'storyId': storyId,
       'contactsStoryVisibleTo': contactsStoryVisibleTo,
+      'caption':caption
     };
   }
 
@@ -41,6 +45,7 @@ class Story {
       dp: map['dp'] ?? '',
       storyId: map['storyId'] ?? '',
       contactsStoryVisibleTo: List<String>.from(map['contactsStoryVisibleTo']),
+      caption: map['caption'] ?? '',
     );
   }
 }

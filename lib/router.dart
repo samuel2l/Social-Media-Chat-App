@@ -40,12 +40,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => MobileChatScreen(name: name, uid: uid,),
       );
           case ConfirmStoryPost.routeName:
-          final file = settings.arguments as File;
+          final args = settings.arguments as Map<String,dynamic>;
+          final file=args['file'] as File;
+          final caption=args['caption'] as String;
           
 
 
       return MaterialPageRoute(
-        builder: (context) => ConfirmStoryPost(file: file),
+        builder: (context) => ConfirmStoryPost(file: file, caption: caption,),
       );
 
     default:

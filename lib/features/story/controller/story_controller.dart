@@ -5,9 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/auth/controller/auth_controller.dart';
 import 'package:social_media_chat_app/features/story/repository/story_repository.dart';
 
-final storyControllerProvider=Provider((ref) {
-  return StoryController(storyRepository: ref.read(storyRepositoryProvider), ref: ref);
-},);
+final storyControllerProvider = Provider(
+  (ref) {
+    return StoryController(
+        storyRepository: ref.read(storyRepositoryProvider), ref: ref);
+  },
+);
 
 class StoryController {
   final StoryRepository storyRepository;
@@ -17,6 +20,7 @@ class StoryController {
 
   void uploadstory({
     required File post,
+    required String caption,
     required BuildContext context,
   }) {
     ref.read(getUserProvider).whenData((value) => storyRepository.uploadstory(
@@ -24,6 +28,7 @@ class StoryController {
         dp: value.dp,
         number: value.phoneNumber,
         post: post,
-        context: context));
+        context: context,
+        caption: caption));
   }
 }

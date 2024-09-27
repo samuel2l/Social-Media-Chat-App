@@ -36,6 +36,7 @@ class StoryRepository {
     required String dp,
     required String number,
     required File post,
+    required String caption,
     required BuildContext context,
   }) async {
     try {
@@ -104,6 +105,7 @@ class StoryRepository {
         dp: dp,
         storyId: storyId,
         contactsStoryVisibleTo: contactsStoryVisibleTo,
+        caption: '',
       );
 
       await firestore.collection('story').doc(storyId).set(story.toMap());
