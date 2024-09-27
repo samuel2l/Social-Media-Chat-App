@@ -7,6 +7,8 @@ import 'package:social_media_chat_app/features/auth/screens/user_profile.dart';
 import 'package:social_media_chat_app/features/contacts/screens/contacts.dart';
 import 'package:social_media_chat_app/features/chat/screens/chat_screen.dart';
 import 'package:social_media_chat_app/features/story/screens/confirm_story_post.dart';
+import 'package:social_media_chat_app/features/story/screens/view_story.dart';
+import 'package:social_media_chat_app/models/story_model.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -47,6 +49,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => ConfirmStoryPost(file:file),
       );
 
+          case StoryScreen.routeName:
+          final story = settings.arguments as Story;
+
+
+      return MaterialPageRoute(
+        builder: (context) => StoryScreen(story: story),
+      );
     default:
       return MaterialPageRoute(
         builder: (context) => const Scaffold(

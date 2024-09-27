@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:social_media_chat_app/models/story_model.dart';
 import 'package:story_view/story_view.dart';
 
-
 class StoryScreen extends StatefulWidget {
   static const String routeName = '/story-screen';
   final Story story;
@@ -28,6 +27,8 @@ class _StoryScreenState extends State<StoryScreen> {
   void initStoryPageItems() {
     for (int i = 0; i < widget.story.photoUrl.length; i++) {
       storyItems.add(StoryItem.pageImage(
+        caption: Text(widget.story.caption[i]),
+        duration: const Duration(seconds: 8),
         url: widget.story.photoUrl[i],
         controller: controller,
       ));
@@ -39,8 +40,8 @@ class _StoryScreenState extends State<StoryScreen> {
     return Scaffold(
       body: storyItems.isEmpty
           ? const Center(
-            child: CircularProgressIndicator(),
-          )
+              child: CircularProgressIndicator(),
+            )
           : StoryView(
               storyItems: storyItems,
               controller: controller,
