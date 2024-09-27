@@ -84,7 +84,7 @@ class _ContactsListState extends ConsumerState<ContactsList> {
                       );
                     },
                   )
-                : Center(child: Text('you have no chats'));
+                : const Center(child: Text('you have no chats'));
           }),
     );
   }
