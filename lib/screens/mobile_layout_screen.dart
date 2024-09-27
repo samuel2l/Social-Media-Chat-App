@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:social_media_chat_app/features/auth/controller/auth_controller.dart';
+import 'package:social_media_chat_app/features/common/utils/utils.dart';
 import 'package:social_media_chat_app/features/contacts/screens/contacts.dart';
 import 'package:social_media_chat_app/features/story/screens/stories.dart';
 import 'package:social_media_chat_app/utils/colors.dart';
@@ -109,8 +112,19 @@ class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
+          onPressed: () async{
+            if(tabController.index==0){
             Navigator.pushNamed(context, ContactsScreen.routeName);
+
+            }else if(tabController.index==1){
+              File? img=await pickImageFromGallery(context);
+              if(img!=null){
+                
+              }
+
+            }else{
+              //go to calls screen
+            }
           },
           backgroundColor: tabColor,
           child: const Icon(

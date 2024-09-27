@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Story extends ConsumerStatefulWidget {
+    static const String routeName = '/stories';
+
   const Story({super.key});
 
   @override
